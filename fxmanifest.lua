@@ -5,8 +5,9 @@ game 'gta5'
 name 'ox_inventory'
 author 'Overextended'
 version '2.48.1'
-repository 'https://github.com/overextended/ox_inventory'
-description 'Slot-based inventory with item metadata support'
+coii_version '1.0.0-rc.1'
+upstream_repository 'https://github.com/overextended/ox_inventory'
+description 'COII Radial Inventory - a configurable weapon-wheel inventory based on ox_inventory'
 
 dependencies {
     '/server:6116',
@@ -39,9 +40,13 @@ files {
     'web/build/index.html',
     'web/build/assets/*.js',
     'web/build/assets/*.css',
+    'web/build/fonts/*.ttf',
     'web/images/*.png',
     'modules/**/shared.lua',
     'modules/**/client.lua',
+    'modules/coii/backpack.lua',
+    'modules/coii/inspect.lua',
+    'modules/coii/attachments.lua',
     'modules/bridge/**/client.lua',
     'data/*.lua',
 }

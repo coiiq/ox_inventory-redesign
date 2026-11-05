@@ -14,6 +14,7 @@ local db = require 'modules.mysql.server'
 local Items = require 'modules.items.server'
 local Inventory = require 'modules.inventory.server'
 local Utils = require 'modules.utils.server'
+local coii = require 'modules.coii.server'
 
 ---@param player table
 ---@param data table?
@@ -63,6 +64,13 @@ function server.setPlayerInventory(player, data)
 
     if inv then
         inv.player = server.setPlayerData(player)
+        local ok, mapped = pcall(server.coiiPrepareSlots, player, inventory)
+        if not ok then Inventory.Remove(inv) error(mapped) end
+        if Inventory(inv.id) ~= inv then return end
+        inventory = mapped
+        totalWeight = Inventory.CalculateWeight(inventory)
+        inv.items = inventory
+        inv.weight = totalWeight
 
         repeat
             inv.player.ped = GetPlayerPed(player.source)
@@ -134,7 +142,7 @@ local function openInventory(source, invType, data, ignoreSecurityChecks)
     if Inventory.Lock then return false end
 
     local left = Inventory(source)
-    local right, closestCoords
+    local right, closestCoords, groundBackpack
 
     if not left then return end
 
@@ -229,9 +237,20 @@ local function openInventory(source, invType, data, ignoreSecurityChecks)
                     end
                 end
             end
+        elseif invType == 'coii_ground_backpack' then
+            right, groundBackpack = server.coiiResolveGroundBackpack(left, data)
+            if not right then return end
+            invType = 'container'
         elseif invType == 'container' then
             left.containerSlot = data --[[@as number]]
             data = left.items[data]
+
+            -- Backpack storage uses the owned PACK resolver, which rechecks its
+            -- equipment slot after hooks. Do not open a second untracked path.
+            if data and coii.BackpackItems[data.name] then
+                left.containerSlot = nil
+                return
+            end
 
             if data then
                 right = Inventory(data.metadata.container)
@@ -248,6 +267,7 @@ local function openInventory(source, invType, data, ignoreSecurityChecks)
         end
 
         if not right then return end
+        if right.coiiOverflowOwner and right.coiiOverflowOwner ~= left.owner then return end
 
         -- Security check to make sure the requested inventory type is the same as the found inventory
         -- Only case where a missmatch is tolerated is for temporary stashes
@@ -269,7 +289,10 @@ local function openInventory(source, invType, data, ignoreSecurityChecks)
             inventoryType = right.type,
         }
 
-        if invType == 'container' then hookPayload.slot = left.containerSlot end
+        if invType == 'container' then
+            hookPayload.slot = groundBackpack and groundBackpack.slot or left.containerSlot
+            if groundBackpack then hookPayload.parentInventory = groundBackpack.drop.id end
+        end
 
         if isDataTable and data.netid then hookPayload.netId = data.netid end
 
@@ -290,15 +313,19 @@ local function openInventory(source, invType, data, ignoreSecurityChecks)
         local hooks <close> = TriggerEventHooks('openInventory', hookPayload)
 
         if not hooks.success then return end
+        if groundBackpack and not server.coiiGroundBackpackPresent(left, groundBackpack) then hooks.success = false return end
     end
 
     left:openInventory(right)
+    if groundBackpack then server.coiiBindGroundBackpack(left, groundBackpack) end
 
     return {
         id = left.id,
         label = left.label,
         type = left.type,
         slots = left.slots,
+        quickSlotStart = shared.quickslotstart,
+        backpackSlot = shared.backpackslot,
         weight = left.weight,
         maxWeight = left.maxWeight
     }, right and {
@@ -309,9 +336,10 @@ local function openInventory(source, invType, data, ignoreSecurityChecks)
         weight = right.weight,
         maxWeight = right.maxWeight,
         items = right.items,
-        coords = closestCoords or right.coords,
-        distance = right.distance,
-        instance = right.instance
+        coords = groundBackpack and groundBackpack.drop.coords or closestCoords or right.coords,
+        distance = groundBackpack and 2.5 or right.distance,
+        instance = groundBackpack and groundBackpack.drop.instance or right.instance,
+        coiiGroundBackpack = groundBackpack and true or nil
     }
 end
 

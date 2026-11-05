@@ -6,6 +6,7 @@ require 'modules.interface.client'
 local Utils = require 'modules.utils.client'
 local Weapon = require 'modules.weapon.client'
 local currentWeapon
+local AmmoBoxes=require 'modules.ammo.client'
 
 exports('getCurrentWeapon', function()
 	return currentWeapon
@@ -32,6 +33,8 @@ local invBusy = true
 local invOpen = false
 local IsPedCuffed = IsPedCuffed
 local playerPed = cache.ped
+client.coiiIsOpen = function() return invOpen == true end
+require 'modules.coii.client'
 
 lib.onCache('ped', function(ped)
 	playerPed = ped
@@ -64,15 +67,12 @@ local function canOpenInventory()
     return true
 end
 
----Used to set player.state.canSteal on the local player, so other players can steal from them.
+---@param ped number
 ---@return boolean
-local function checkCanSteal()
-	local ped = client.player.handle
-
-	return PlayerData.dead
-	or IsPedCuffed(ped)
-	or IsPedFatallyInjured(ped)
+local function canOpenTarget(ped)
+	return IsPedFatallyInjured(ped)
 	or IsEntityPlayingAnim(ped, 'dead', 'dead_a', 3)
+	or IsPedCuffed(ped)
 	or IsEntityPlayingAnim(ped, 'mp_arresting', 'idle', 3)
 	or IsEntityPlayingAnim(ped, 'missminuteman_1ig_2', 'handsup_base', 3)
 	or IsEntityPlayingAnim(ped, 'missminuteman_1ig_2', 'handsup_enter', 3)
@@ -142,11 +142,11 @@ function client.openInventory(inv, data)
 				return client.closeInventory()
 			end
 
-			if currentInventory.type == 'drop' and (not data or currentInventory.id == (type(data) == 'table' and data.id or data)) then
+			if inv == 'drop' and currentInventory.type == 'drop' and (not data or currentInventory.id == (type(data) == 'table' and data.id or data)) then
 				return client.closeInventory()
 			end
 
-			if inv ~= 'drop' and inv ~= 'container' then
+			if inv ~= 'drop' and inv ~= 'container' and inv ~= 'coii_ground_backpack' then
 				if (data?.id or data) == currentInventory.id then
 					-- Triggering exports.ox_inventory:openInventory('stash', 'mystash') twice in rapid succession is weird behaviour
 					return warn(("script tried to open inventory, but it is already open\n%s"):format(Citizen.InvokeNative(`FORMAT_STACK_TRACE` & 0xFFFFFFFF, nil, 0, Citizen.ResultAsString())))
@@ -514,6 +514,14 @@ local function useSlot(slot, noAnim)
 		data.slot = slot
 
 		if item.metadata.container then
+			if client.coiiIsBackpack(item) then
+				if item.slot == shared.backpackslot then
+					SendNUIMessage({ action = 'coiiFocusBackpack' })
+				else
+					lib.notify({ type = 'inform', description = 'Drag this backpack into the backpack equipment slot to wear it.' })
+				end
+				return
+			end
 			return client.openInventory('container', item.slot)
 		elseif data.client then
 			if invOpen and data.close then client.closeInventory() end
@@ -560,7 +568,9 @@ local function useSlot(slot, noAnim)
 				end
 			end, noAnim)
 		elseif currentWeapon then
-			if data.ammo then
+			if data.ammoBox then
+                return AmmoBoxes.reload(data,function()return currentWeapon end,useItem)
+            elseif data.ammo then
 				if EnableWeaponWheel or currentWeapon.metadata.durability <= 0 then return end
 
 				local clipSize = GetMaxAmmoInClip(playerPed, currentWeapon.hash, true)
@@ -857,6 +867,7 @@ local function registerCommands()
 			if currentWeapon.ammo then
 				if currentWeapon.metadata.durability > 0 then
 					local slotId = Inventory.GetSlotIdWithItem(currentWeapon.ammo, { type = currentWeapon.metadata.specialAmmo }, false)
+                        or AmmoBoxes.findSlot(PlayerData.inventory,currentWeapon)
 
 					if slotId then
 						useSlot(slotId)
@@ -885,7 +896,7 @@ local function registerCommands()
 			defaultKey = tostring(i),
 			onPressed = function()
 				if invOpen or EnableWeaponWheel or not invHotkeys or IsNuiFocused() then return end
-				useSlot(i)
+				useSlot(shared.quickslotstart + i - 1)
 			end
 		})
 	end
@@ -898,6 +909,7 @@ function client.closeInventory()
 
 	if invOpen then
 		invOpen = nil
+		client.coiiClosePreview()
 		SetNuiFocus(false, false)
 		SetNuiFocusKeepInput(false)
 		Utils.blurOut()
@@ -1043,43 +1055,101 @@ local function nearbyDrop(point)
 end
 
 ---@param point CPoint
+local backpackTargetBusy = false
+local function pickupBackpack(point)
+    if backpackTargetBusy or not client.drops or client.drops[point.invId] ~= point then return end
+    if not canOpenInventory() then return lib.notify({ type = 'error', description = locale('inventory_player_access') }) end
+    backpackTargetBusy = true
+    if invOpen then client.closeInventory() end
+    local ok, pickedUp, reason = pcall(lib.callback.await, 'ox_inventory:coiiPickupBackpack', false, point.invId)
+    backpackTargetBusy = false
+    if not ok or not pickedUp then
+        lib.notify({ type = 'error', description = ok and reason or 'Could not pick up this backpack.' })
+    end
+end
+
 local function onEnterDrop(point)
-	if not point.instance or point.instance == currentInstance and not point.entity then
+	if (not point.instance or point.instance == currentInstance) and not point.entity and not point.coiiLoading then
+		local token = {}
+		point.coiiLoading = token
 		local model = point.model or client.dropmodel
 
         -- Prevent breaking inventory on invalid point.model instead use default client.dropmodel
-        if not IsModelValid(model) and not IsModelInCdimage(model) then
+        if not IsModelValid(model) or not IsModelInCdimage(model) then
             model = client.dropmodel
         end
-		lib.requestModel(model)
+		local loaded = pcall(lib.requestModel, model, 5000)
+        if not loaded or point.coiiLoading ~= token or not client.drops or client.drops[point.invId] ~= point
+            or (point.instance and point.instance ~= currentInstance) then
+            if point.coiiLoading == token then point.coiiLoading = nil end
+            SetModelAsNoLongerNeeded(model)
+            return
+        end
+		point.coiiLoading = nil
 
 		local entity = CreateObject(model, point.coords.x, point.coords.y, point.coords.z, false, true, true)
 
 		SetModelAsNoLongerNeeded(model)
+        if not entity or entity == 0 then return end
+        if point.heading then SetEntityHeading(entity, point.heading) end
 		PlaceObjectOnGroundProperly(entity)
 		FreezeEntityPosition(entity, true)
-		SetEntityCollision(entity, false, true)
+		SetEntityCollision(entity, point.backpack == true, true)
 
 		point.entity = entity
+        if point.backpack then
+            local target = GetResourceState('coii_target') == 'started' and 'coii_target'
+                or (shared.target and GetResourceState('ox_target') == 'started' and 'ox_target')
+            if target then
+                local added = pcall(function()
+                    exports[target]:addLocalEntity(entity, {
+                        {
+                            name = 'ox_inventory:backpackOpen', icon = 'fas fa-box-open', label = 'Open backpack', distance = 1.6,
+                            onSelect = function()
+                                if not backpackTargetBusy and client.drops and client.drops[point.invId] == point then
+                                    client.openInventory('coii_ground_backpack', point.invId)
+                                end
+                            end
+                        },
+                        {
+                            name = 'ox_inventory:backpackPickup', icon = 'fas fa-hand', label = 'Pick up backpack', distance = 1.6,
+                            canInteract = function() return not backpackTargetBusy end,
+                            onSelect = function() pickupBackpack(point) end
+                        }
+                    })
+                end)
+                if added then point.coiiTarget = target end
+            end
+        end
 	end
 end
 
 local function onExitDrop(point)
+	point.coiiLoading = nil -- Cancel a model request still waiting for streaming.
 	local entity = point.entity
 
 	if entity then
+        if point.coiiTarget and GetResourceState(point.coiiTarget) == 'started' then
+            pcall(function() exports[point.coiiTarget]:removeLocalEntity(entity, { 'ox_inventory:backpackOpen', 'ox_inventory:backpackPickup' }) end)
+        end
+		point.coiiTarget = nil
 		Utils.DeleteEntity(entity)
 		point.entity = nil
 	end
 end
+client.coiiRemoveDropEntity = onExitDrop
 
 local function createDrop(dropId, data)
+	local previous = client.drops and client.drops[dropId]
+	if previous and previous.remove then onExitDrop(previous); previous:remove() end
 	local point = lib.points.new({
 		coords = data.coords,
 		distance = 16,
 		invId = dropId,
 		instance = data.instance,
-		model = data.model
+		model = data.model,
+        backpack = data.backpack,
+        heading = data.heading
 	})
 
 	if point.model or client.dropprops then
@@ -1122,9 +1192,8 @@ RegisterNetEvent('ox_inventory:removeDrop', function(dropId)
 
 		if point then
 			client.drops[dropId] = nil
+			onExitDrop(point)
 			point:remove()
-
-			if point.entity then Utils.DeleteEntity(point.entity) end
 		end
 	end
 end)
@@ -1133,6 +1202,7 @@ end)
 local function setStateBagHandler(stateId)
 	AddStateBagChangeHandler('invOpen', stateId, function(_, _, value)
 		invOpen = value
+        if not value then client.coiiClosePreview() end
 	end)
 
 	AddStateBagChangeHandler('invBusy', stateId, function(_, _, value)
@@ -1153,10 +1223,7 @@ local function setStateBagHandler(stateId)
 			for dropId, point in pairs(client.drops) do
 				if point.instance then
 					if point.instance ~= value then
-						if point.entity then
-							Utils.DeleteEntity(point.entity)
-							point.entity = nil
-						end
+						onExitDrop(point)
 
 						point:remove()
 					else
@@ -1239,6 +1306,7 @@ RegisterNetEvent('ox_inventory:setPlayerInventory', function(currentDrops, inven
 
 		ItemData[v.name] = {
 			label = v.label,
+			prop = client.coiiInspectProp(v),
 			stack = v.stack,
 			close = v.close,
 			count = 0,
@@ -1348,6 +1416,8 @@ RegisterNetEvent('ox_inventory:setPlayerInventory', function(currentDrops, inven
 			leftInventory = {
 				id = cache.playerId,
 				slots = shared.playerslots,
+				quickSlotStart = shared.quickslotstart,
+				backpackSlot = shared.backpackslot,
 				items = PlayerData.inventory,
 				maxWeight = shared.playerweight,
 			},
@@ -1370,7 +1440,7 @@ RegisterNetEvent('ox_inventory:setPlayerInventory', function(currentDrops, inven
 	TriggerEvent('ox_inventory:updateInventory', PlayerData.inventory)
 
 	client.interval = SetInterval(function()
-        local canSteal = checkCanSteal()
+        local canSteal = canOpenTarget(playerPed)
 
         if canSteal ~= client.player:get('canSteal') then
             client.player:setr('canSteal', canSteal)
@@ -1509,6 +1579,7 @@ RegisterNetEvent('ox_inventory:setPlayerInventory', function(currentDrops, inven
 
 						if client.autoreload and currentWeapon.ammo and GetAmmoInPedWeapon(playerPed, currentWeapon.hash) == 0 then
 							local slotId = Inventory.GetSlotIdWithItem(currentWeapon.ammo, { type = currentWeapon.metadata.specialAmmo }, false)
+                                or AmmoBoxes.findSlot(PlayerData.inventory,currentWeapon)
 
 							if slotId then
 								CreateThread(function() useSlot(slotId) end)
@@ -1818,6 +1889,11 @@ RegisterNUICallback('swapItems', function(data, cb)
 
     swapActive = true
 
+    if data.toType == 'drop' and data.fromType == 'player' and client.coiiIsBackpack(PlayerData.inventory[data.fromSlot]) then
+        data.toType = 'newdrop'
+        data.toSlot = 1
+    end
+
 	if data.toType == 'newdrop' then
 		if cache.vehicle or IsPedFalling(playerPed) then
 			swapActive = false
@@ -1835,7 +1911,7 @@ RegisterNUICallback('swapItems', function(data, cb)
 				local retval, hit, endCoords = GetShapeTestResult(handle)
 
 				if retval ~= 1 then
-					if not hit then return end
+					if not hit then swapActive = false; cb(false); return end
 
 					data.coords = vec3(endCoords.x, endCoords.y, endCoords.z + 1.0)
 

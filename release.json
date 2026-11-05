@@ -1,0 +1,8 @@
+{
+  "name": "COII Radial Inventory",
+  "version": "1.0.0-rc.1",
+  "resource": "ox_inventory",
+  "upstreamVersion": "2.48.1",
+  "upstreamCommit": "b7b9e31d95c6a50cdd8deaddf27e8747af593764",
+  "license": "GPL-3.0-or-later"
+}

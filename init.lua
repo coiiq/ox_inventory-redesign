@@ -15,14 +15,20 @@ end
 shared = {
     resource = GetCurrentResourceName(),
     framework = GetConvar('inventory:framework', 'esx'),
-    playerslots = GetConvarInt('inventory:slots', 50),
+    playerslots = math.max(1, math.min(24, GetConvarInt('inventory:slots', 24))),
     playerweight = GetConvarInt('inventory:weight', 30000),
     target = GetConvarBool('inventory:target', false),
     police = json.decode(GetConvar('inventory:police', '["police", "sheriff"]')),
     networkdumpsters = GetConvarBool('inventory:networkdumpsters', false)
 }
 
-shared.dropslots = GetConvarInt('inventory:dropslots', shared.playerslots)
+-- Configured slots remain pockets; quick access has five separate real slots.
+shared.pocketslots = shared.playerslots
+shared.quickslotstart = shared.pocketslots + 1
+shared.backpackslot = shared.pocketslots + 6
+shared.playerslots = shared.backpackslot
+
+shared.dropslots = GetConvarInt('inventory:dropslots', shared.pocketslots)
 shared.dropweight = GetConvarInt('inventory:dropweight', shared.playerweight)
 
 do
@@ -94,7 +100,7 @@ else
         weaponanims = GetConvarBool('inventory:weaponanims', true),
         itemnotify = GetConvarBool('inventory:itemnotify', true),
         weaponnotify = GetConvarBool('inventory:weaponnotify', true),
-        imagepath = GetConvar('inventory:imagepath', 'nui://ox_inventory/web/images'),
+        imagepath = GetConvar('inventory:imagepath', ('nui://%s/web/images'):format(shared.resource)),
         dropprops = GetConvarBool('inventory:dropprops', false),
         dropmodel = joaat(GetConvar('inventory:dropmodel', 'prop_med_bag_01b')),
         weaponmismatch = GetConvarBool('inventory:weaponmismatch', true),
