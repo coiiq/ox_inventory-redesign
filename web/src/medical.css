@@ -1,0 +1,19 @@
+.coii-medical-fx{position:fixed;inset:0;z-index:100000;overflow:hidden;pointer-events:none;visibility:hidden;contain:strict;--medical-duration:2400ms}
+.coii-medical-fx.is-active{visibility:visible}
+.coii-medical-fx i{position:absolute;inset:0;display:block;opacity:0;pointer-events:none}
+.coii-medical-edge{background:radial-gradient(ellipse at 50% 49%,rgba(var(--coii-accent-rgb),0) 24%,rgba(var(--coii-accent-rgb),.031373) 48%,rgba(var(--coii-accent-rgb),.478431) 100%)}
+.coii-medical-bloom{background:radial-gradient(ellipse at 50% 50%,rgba(var(--coii-medical-bloom-rgb),.301961) 0%,rgba(var(--coii-accent-rgb),.101961) 40%,rgba(var(--coii-accent-rgb),0) 78%);mix-blend-mode:screen}
+.coii-medical-wave{background:radial-gradient(ellipse at center,transparent 45%,rgba(var(--coii-medical-wave-rgb),.12549) 52%,rgba(var(--coii-accent-rgb),.333333) 58%,transparent 68%);transform:scale(.3)}
+.coii-medical-sweep{inset:-30% -70%!important;background:linear-gradient(112deg,transparent 35%,rgba(var(--coii-medical-sweep-rgb),0) 43%,rgba(var(--coii-medical-sweep-rgb),.141176) 49%,rgba(var(--coii-accent-rgb),.05098) 52%,transparent 60%);transform:translateX(-35%)}
+.is-active .coii-medical-edge{animation:coii-medical-edge var(--medical-duration) ease-out both}
+.is-active .coii-medical-bloom{animation:coii-medical-bloom var(--medical-duration) ease-out both}
+.is-active .coii-medical-wave{animation:coii-medical-wave var(--medical-duration) cubic-bezier(.16,.7,.2,1) both}
+.is-active .coii-medical-sweep{animation:coii-medical-sweep var(--medical-duration) cubic-bezier(.2,.65,.15,1) both}
+@keyframes coii-medical-edge{0%{opacity:0}7%{opacity:.9}27%{opacity:.34}40%{opacity:.58}70%{opacity:.16}100%{opacity:0}}
+@keyframes coii-medical-bloom{0%{opacity:0}5%{opacity:.65}22%{opacity:.12}48%,100%{opacity:0}}
+@keyframes coii-medical-wave{0%{opacity:0;transform:scale(.3)}8%{opacity:.65}60%{opacity:.14}100%{opacity:0;transform:scale(1.8)}}
+@keyframes coii-medical-sweep{0%{opacity:0;transform:translateX(-35%)}12%{opacity:.5}68%{opacity:.12}100%{opacity:0;transform:translateX(35%)}}
+.coii-medical-fx.is-reduced .coii-medical-wave,.coii-medical-fx.is-reduced .coii-medical-sweep{display:none}
+.coii-medical-fx.is-reduced .coii-medical-edge{animation:coii-medical-reduced var(--medical-duration) ease-out both!important}
+.coii-medical-fx.is-reduced .coii-medical-bloom{display:none}
+@keyframes coii-medical-reduced{0%{opacity:0}12%{opacity:.3}100%{opacity:0}}

@@ -1,0 +1,14 @@
+/* Theme defaults also work in isolated browser fixtures without the Lua bridge. */
+/* Keep the embedded browser canvas transparent, independently of panel colours. */
+html{background:transparent!important;color-scheme:only light!important}
+:root{--coii-accent-rgb:80,183,245;--coii-surface-rgb:11,19,32;--coii-backdrop-rgb:3,9,17;--coii-text-rgb:255,255,255;--coii-muted-rgb:167,179,196;--coii-border-rgb:42,57,77;--coii-pattern-rgb:41,64,91;--coii-pattern-heading-rgb:28,41,57;--coii-ink-rgb:11,19,32;--coii-on-accent-rgb:11,19,32;--coii-accent-soft-rgb:142,212,255;--coii-accent-hover-rgb:139,208,250;--coii-medical-bloom-rgb:222,246,255;--coii-medical-wave-rgb:164,228,255;--coii-medical-sweep-rgb:176,231,255;--coii-opacity:1;--coii-pattern-opacity:.18;--coii-font-heading:CoiiHeading,'Arial Narrow',sans-serif;--coii-font-body:CoiiBody,'Arial Narrow',sans-serif;--coii-on-accent:#0b1320;--coii-on-accent-muted:#17354a;--coii-text-secondary:#c9d4e3;--coii-panel-hover:#172334;--coii-tile:#fff;--coii-tile-soft:#f7f8fa;--coii-notice-tile:#f5f7fa;--coii-wheel-size:66;--wheel:min(calc(var(--coii-wheel-size)*1vh),65vw);--wheel-top:calc(47vh - var(--wheel)/2)}
+.coii-heading-lines path{stroke:rgb(var(--coii-pattern-heading-rgb));opacity:min(1,calc(var(--coii-pattern-opacity)*2.222222))}
+.coii-circle-linework{stroke:var(--coii-pattern)}
+.coii-wheel-pattern{opacity:var(--coii-pattern-opacity)}
+.coii-inspect-header .coii-heading-lines path{opacity:min(1,calc(var(--coii-pattern-opacity)*3.888889))}
+.coii-notice-image::before{opacity:min(1,calc(var(--coii-pattern-opacity)/.18))}
+.coii-part-trigger:hover .coii-part-icon,.coii-part-node.is-active .coii-part-icon,.coii-attachment-row button:hover:not(:disabled){color:var(--coii-on-accent)}
+.coii-primary-action kbd{color:#fff}
+:root[data-coii-animations=off] *{animation:none!important;transition:none!important}
+:root[data-coii-animations=off] .coii-wheel-loading-ring{display:none}
+@media(max-aspect-ratio:4/3){:root{--wheel:min(calc((var(--coii-wheel-size) - 4)*1vh),65vw);--wheel-top:calc(46vh - var(--wheel)/2)}}

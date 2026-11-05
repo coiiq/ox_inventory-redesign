@@ -1,0 +1,10 @@
+{
+  "version": "2.48.1",
+  "commit": "b7b9e31d95c6a50cdd8deaddf27e8747af593764",
+  "repository": "https://github.com/overextended/ox_inventory",
+  "release": "https://github.com/overextended/ox_inventory/releases/tag/v2.48.1",
+  "bundles": {
+    "ox-inventory.js": "430cb7c4cb886700f4a9b2a9c7eefef308886898357e2160c4535165d275c539",
+    "ox-inventory.css": "7ef8c19c39385ddc51c72eab6960eae30b0a6f6a0d9679baeca13d9d458a3805"
+  }
+}

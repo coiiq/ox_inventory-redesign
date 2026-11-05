@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 256 256">
+  <defs>
+    <linearGradient id="metal" x2=".85" y2="1"><stop stop-color="#bdc4c9"/><stop offset=".35" stop-color="#59636b"/><stop offset="1" stop-color="#232b31"/></linearGradient>
+    <linearGradient id="face" x2=".75" y2="1"><stop stop-color="#3e474f"/><stop offset=".5" stop-color="#242c33"/><stop offset="1" stop-color="#10171d"/></linearGradient>
+    <linearGradient id="gold" x2="1" y2=".9"><stop stop-color="#f5dda1"/><stop offset=".28" stop-color="#b98d39"/><stop offset=".5" stop-color="#e8c572"/><stop offset="1" stop-color="#765017"/></linearGradient>
+    <linearGradient id="edge" x2="1" y2="1"><stop stop-color="#161e25"/><stop offset="1" stop-color="#56616a"/></linearGradient>
+  </defs>
+  <ellipse cx="130" cy="216" rx="77" ry="15" fill="#000" opacity=".2"/>
+  <path d="M37 83 166 49 218 83 212 190 82 223 32 184Z" fill="#10171d" stroke="#0b1117" stroke-width="5" stroke-linejoin="round"/>
+  <path d="M37 83 166 49 218 83 87 120Z" fill="url(#metal)" stroke="#89939a" stroke-width="2"/>
+  <path d="M37 83 87 120 82 223 32 184Z" fill="url(#edge)" stroke="#4d5962" stroke-width="2"/>
+  <path d="M87 120 218 83 212 190 82 223Z" fill="url(#face)" stroke="#66717a" stroke-width="2"/>
+  <path d="M95 129 207 98 202 180 90 210Z" fill="#121a21" stroke="#6f7880" stroke-width="1.6"/>
+  <path d="M104 136 196 111 192 168 101 193Z" fill="url(#gold)" stroke="#f4dca4" stroke-width="1.3"/>
+  <path d="m112 143 76-21M111 148l76-21" stroke="#fff0c6" stroke-opacity=".35" stroke-width="1"/>
+  <text x="146" y="162" text-anchor="middle" transform="rotate(-15 146 162)" font-family="Arial,sans-serif" font-size="19" font-weight="900" letter-spacing="1" fill="#39280f">LUXE</text>
+  <path d="m114 181 61-17" stroke="#76551e" stroke-width="2"/>
+  <path d="m47 101 12 8-4 59-12-8Z" fill="#1c242c" stroke="#71808a" stroke-width="2"/>
+  <path d="m103 92 50-14 11 8-50 14Z" fill="#e2e6e8" stroke="#202932" stroke-width="3"/>
+  <path d="m109 80 1-10 30-8 11 8-1 10" fill="none" stroke="#9ca8b1" stroke-width="6" stroke-linejoin="round"/>
+  <path d="m88 120 130-37M82 222l130-33" stroke="#c4cdd4" stroke-opacity=".4" stroke-width="1.6"/>
+  <path d="m96 117 12-3-1 16-12 3Zm93-27 12-3-1 16-12 3Z" fill="#d5dce1" stroke="#2b353e" stroke-width="2"/>
+  <path d="m100 119 4-1m89-23 4-1" stroke="#444e57" stroke-width="2"/>
+</svg>

@@ -1,0 +1,1344 @@
+{
+  "weapons": [
+    {
+      "name": "WEAPON_BATTLERIFLE",
+      "label": "Battle Rifle",
+      "model": "W_SL_BattleRifle_M32",
+      "category": "GROUP_RIFLE",
+      "ammo": "ammo-rifle2",
+      "defaults": [
+        {
+          "name": "COMPONENT_BATTLERIFLE_CLIP_01",
+          "bone": "WAPClip"
+        }
+      ]
+    },
+    {
+      "name": "WEAPON_SNOWLAUNCHER",
+      "label": "Snowball Launcher",
+      "model": "W_LR_CompactSL_M32",
+      "category": "GROUP_HEAVY",
+      "ammo": "WEAPON_SNOWBALL",
+      "defaults": []
+    },
+    {
+      "name": "WEAPON_TECPISTOL",
+      "label": "Tactical SMG",
+      "model": "W_PI_PistolSMG_M31",
+      "category": "GROUP_SMG",
+      "ammo": "ammo-9",
+      "defaults": [
+        {
+          "name": "COMPONENT_TECPISTOL_CLIP_01",
+          "bone": "WAPClip"
+        }
+      ]
+    },
+    {
+      "name": "WEAPON_ADVANCEDRIFLE",
+      "label": "Advanced Rifle",
+      "model": "W_AR_ADVANCEDRIFLE",
+      "category": "GROUP_RIFLE",
+      "ammo": "ammo-rifle",
+      "defaults": [
+        {
+          "name": "COMPONENT_ADVANCEDRIFLE_CLIP_01",
+          "bone": "WAPClip"
+        }
+      ]
+    },
+    {
+      "name": "WEAPON_APPISTOL",
+      "label": "AP Pistol",
+      "model": "W_PI_APPISTOL",
+      "category": "GROUP_PISTOL",
+      "ammo": "ammo-9",
+      "defaults": [
+        {
+          "name": "COMPONENT_APPISTOL_CLIP_01",
+          "bone": "WAPClip"
+        }
+      ]
+    },
+    {
+      "name": "WEAPON_ASSAULTRIFLE",
+      "label": "Assault Rifle",
+      "model": "W_AR_ASSAULTRIFLE",
+      "category": "GROUP_RIFLE",
+      "ammo": "ammo-rifle2",
+      "defaults": [
+        {
+          "name": "COMPONENT_ASSAULTRIFLE_CLIP_01",
+          "bone": "WAPClip"
+        }
+      ]
+    },
+    {
+      "name": "WEAPON_ASSAULTRIFLE_MK2",
+      "label": "Assault Rifle MK2",
+      "model": "w_ar_assaultriflemk2",
+      "category": "GROUP_RIFLE",
+      "ammo": "ammo-rifle2",
+      "defaults": [
+        {
+          "name": "COMPONENT_ASSAULTRIFLE_MK2_CLIP_01",
+          "bone": "WAPClip"
+        },
+        {
+          "name": "COMPONENT_AT_AR_BARREL_01",
+          "bone": "WAPBarrel"
+        }
+      ]
+    },
+    {
+      "name": "WEAPON_ASSAULTSHOTGUN",
+      "label": "Assault Shotgun",
+      "model": "w_sg_assaultshotgun",
+      "category": "GROUP_SHOTGUN",
+      "ammo": "ammo-shotgun",
+      "defaults": [
+        {
+          "name": "COMPONENT_ASSAULTSHOTGUN_CLIP_01",
+          "bone": "WAPClip"
+        }
+      ]
+    },
+    {
+      "name": "WEAPON_ASSAULTSMG",
+      "label": "Assault SMG",
+      "model": "w_sb_assaultsmg",
+      "category": "GROUP_SMG",
+      "ammo": "ammo-rifle",
+      "defaults": [
+        {
+          "name": "COMPONENT_ASSAULTSMG_CLIP_01",
+          "bone": "WAPClip"
+        }
+      ]
+    },
+    {
+      "name": "WEAPON_BALL",
+      "label": "Ball",
+      "model": "w_am_baseball",
+      "category": "GROUP_THROWN",
+      "defaults": []
+    },
+    {
+      "name": "WEAPON_BAT",
+      "label": "Bat",
+      "model": "w_me_bat",
+      "category": "GROUP_MELEE",
+      "defaults": []
+    },
+    {
+      "name": "WEAPON_BATTLEAXE",
+      "label": "Battle Axe",
+      "model": "w_me_battleaxe",
+      "category": "GROUP_MELEE",
+      "defaults": []
+    },
+    {
+      "name": "WEAPON_BOTTLE",
+      "label": "Bottle",
+      "model": "w_me_bottle",
+      "category": "GROUP_MELEE",
+      "defaults": []
+    },
+    {
+      "name": "WEAPON_BULLPUPRIFLE",
+      "label": "Bullpup Rifle",
+      "model": "w_ar_bullpuprifle",
+      "category": "GROUP_RIFLE",
+      "ammo": "ammo-rifle",
+      "defaults": [
+        {
+          "name": "COMPONENT_BULLPUPRIFLE_CLIP_01",
+          "bone": "WAPClip"
+        }
+      ]
+    },
+    {
+      "name": "WEAPON_BULLPUPRIFLE_MK2",
+      "label": "Bullpup Rifle MK2",
+      "model": "w_ar_bullpupriflemk2",
+      "category": "GROUP_RIFLE",
+      "ammo": "ammo-rifle",
+      "defaults": [
+        {
+          "name": "COMPONENT_BULLPUPRIFLE_MK2_CLIP_01",
+          "bone": "WAPClip"
+        },
+        {
+          "name": "COMPONENT_AT_BP_BARREL_01",
+          "bone": "WAPBarrel"
+        }
+      ]
+    },
+    {
+      "name": "WEAPON_BULLPUPSHOTGUN",
+      "label": "Bullpup Shotgun",
+      "model": "w_sg_bullpupshotgun",
+      "category": "GROUP_SHOTGUN",
+      "ammo": "ammo-shotgun",
+      "defaults": [
+        {
+          "name": "COMPONENT_BULLPUPSHOTGUN_CLIP_01",
+          "bone": "WAPClip"
+        }
+      ]
+    },
+    {
+      "name": "WEAPON_BZGAS",
+      "label": "BZ Gas",
+      "model": "w_ex_grenadesmoke",
+      "category": "GROUP_THROWN",
+      "defaults": []
+    },
+    {
+      "name": "WEAPON_CARBINERIFLE",
+      "label": "Carbine Rifle",
+      "model": "W_AR_CARBINERIFLE",
+      "category": "GROUP_RIFLE",
+      "ammo": "ammo-rifle",
+      "defaults": [
+        {
+          "name": "COMPONENT_CARBINERIFLE_CLIP_01",
+          "bone": "WAPClip"
+        }
+      ]
+    },
+    {
+      "name": "WEAPON_CARBINERIFLE_MK2",
+      "label": "Carbine Rifle MK2",
+      "model": "w_ar_carbineriflemk2",
+      "category": "GROUP_RIFLE",
+      "ammo": "ammo-rifle",
+      "defaults": [
+        {
+          "name": "COMPONENT_CARBINERIFLE_MK2_CLIP_01",
+          "bone": "WAPClip"
+        },
+        {
+          "name": "COMPONENT_AT_CR_BARREL_01",
+          "bone": "WAPBarrel"
+        }
+      ]
+    },
+    {
+      "name": "WEAPON_CERAMICPISTOL",
+      "label": "Ceramic Pistol",
+      "model": "w_pi_ceramic_pistol",
+      "category": "GROUP_PISTOL",
+      "ammo": "ammo-9",
+      "defaults": [
+        {
+          "name": "COMPONENT_CERAMICPISTOL_CLIP_01",
+          "bone": "WAPClip"
+        }
+      ]
+    },
+    {
+      "name": "WEAPON_PISTOLXM3",
+      "label": "WM 29 Pistol",
+      "model": "W_PI_Pistol_XM3",
+      "category": "GROUP_PISTOL",
+      "ammo": "ammo-9",
+      "defaults": [
+        {
+          "name": "COMPONENT_PISTOLXM3_CLIP_01",
+          "bone": "WAPClip"
+        }
+      ]
+    },
+    {
+      "name": "WEAPON_COMBATMG",
+      "label": "Combat MG",
+      "model": "w_mg_combatmg",
+      "category": "GROUP_MG",
+      "ammo": "ammo-rifle",
+      "defaults": [
+        {
+          "name": "COMPONENT_COMBATMG_CLIP_01",
+          "bone": "WAPClip"
+        }
+      ]
+    },
+    {
+      "name": "WEAPON_COMBATMG_MK2",
+      "label": "Combat MG MK2",
+      "model": "w_mg_combatmgmk2",
+      "category": "GROUP_MG",
+      "ammo": "ammo-rifle2",
+      "defaults": [
+        {
+          "name": "COMPONENT_COMBATMG_MK2_CLIP_01",
+          "bone": "WAPClip"
+        },
+        {
+          "name": "COMPONENT_AT_MG_BARREL_01",
+          "bone": "WAPBarrel"
+        }
+      ]
+    },
+    {
+      "name": "WEAPON_COMBATPDW",
+      "label": "Combat PDW",
+      "model": "W_SB_PDW",
+      "category": "GROUP_SMG",
+      "ammo": "ammo-9",
+      "defaults": [
+        {
+          "name": "COMPONENT_COMBATPDW_CLIP_01",
+          "bone": "WAPClip_2"
+        }
+      ]
+    },
+    {
+      "name": "WEAPON_COMBATPISTOL",
+      "label": "Combat Pistol",
+      "model": "W_PI_COMBATPISTOL",
+      "category": "GROUP_PISTOL",
+      "ammo": "ammo-9",
+      "defaults": [
+        {
+          "name": "COMPONENT_COMBATPISTOL_CLIP_01",
+          "bone": "WAPClip"
+        }
+      ]
+    },
+    {
+      "name": "WEAPON_COMBATSHOTGUN",
+      "label": "Combat Shotgun",
+      "model": "w_sg_pumpshotgunh4",
+      "category": "GROUP_SHOTGUN",
+      "ammo": "ammo-shotgun",
+      "defaults": [
+        {
+          "name": "COMPONENT_COMBATSHOTGUN_CLIP_01",
+          "bone": "WAPClip"
+        }
+      ]
+    },
+    {
+      "name": "WEAPON_COMPACTLAUNCHER",
+      "label": "Compact Grenade Launcher",
+      "model": "w_lr_compactgl",
+      "category": "GROUP_HEAVY",
+      "ammo": "ammo-grenade",
+      "defaults": [
+        {
+          "name": "COMPONENT_COMPACTLAUNCHER_CLIP_01",
+          "bone": "WAPClip"
+        }
+      ]
+    },
+    {
+      "name": "WEAPON_COMPACTRIFLE",
+      "label": "Compact Rifle",
+      "model": "w_ar_assaultrifle_smg",
+      "category": "GROUP_RIFLE",
+      "ammo": "ammo-rifle2",
+      "defaults": [
+        {
+          "name": "COMPONENT_COMPACTRIFLE_CLIP_01",
+          "bone": "WAPClip"
+        }
+      ]
+    },
+    {
+      "name": "WEAPON_CROWBAR",
+      "label": "Crowbar",
+      "model": "w_me_crowbar",
+      "category": "GROUP_MELEE",
+      "defaults": []
+    },
+    {
+      "name": "WEAPON_DAGGER",
+      "label": "Dagger",
+      "model": "w_me_dagger",
+      "category": "GROUP_MELEE",
+      "defaults": []
+    },
+    {
+      "name": "WEAPON_DBSHOTGUN",
+      "label": "Double Barrel Shotgun",
+      "model": "w_sg_doublebarrel",
+      "category": "GROUP_SHOTGUN",
+      "ammo": "ammo-shotgun",
+      "defaults": [
+        {
+          "name": "COMPONENT_DBSHOTGUN_CLIP_01",
+          "bone": "WAPClip"
+        }
+      ]
+    },
+    {
+      "name": "WEAPON_DOUBLEACTION",
+      "label": "Double Action Revolver",
+      "model": "w_pi_wep1_gun",
+      "category": "GROUP_PISTOL",
+      "ammo": "ammo-38",
+      "defaults": [
+        {
+          "name": "COMPONENT_DOUBLEACTION_CLIP_01",
+          "bone": "WAPClip"
+        }
+      ]
+    },
+    {
+      "name": "WEAPON_EMPLAUNCHER",
+      "label": "Compact EMP Launcher",
+      "model": "w_lr_compactml",
+      "category": "GROUP_HEAVY",
+      "ammo": "ammo-emp",
+      "defaults": [
+        {
+          "name": "COMPONENT_EMPLAUNCHER_CLIP_01",
+          "bone": "WAPClip"
+        }
+      ]
+    },
+    {
+      "name": "WEAPON_FIREEXTINGUISHER",
+      "label": "Fire Extinguisher",
+      "model": "w_am_fire_exting",
+      "category": "GROUP_FIREEXTINGUISHER",
+      "defaults": []
+    },
+    {
+      "name": "WEAPON_FIREWORK",
+      "label": "Firework Launcher",
+      "model": "w_lr_firework",
+      "category": "GROUP_HEAVY",
+      "ammo": "ammo-firework",
+      "defaults": [
+        {
+          "name": "COMPONENT_FIREWORK_CLIP_01",
+          "bone": "WAPClip"
+        }
+      ]
+    },
+    {
+      "name": "WEAPON_FLARE",
+      "label": "Flare",
+      "model": "w_am_flare",
+      "category": "GROUP_THROWN",
+      "defaults": []
+    },
+    {
+      "name": "WEAPON_FLAREGUN",
+      "label": "Flare Gun",
+      "model": "w_pi_flaregun",
+      "category": "GROUP_PISTOL",
+      "ammo": "ammo-flare",
+      "defaults": [
+        {
+          "name": "COMPONENT_FLAREGUN_CLIP_01",
+          "bone": "WAPClip"
+        }
+      ]
+    },
+    {
+      "name": "WEAPON_FLASHLIGHT",
+      "label": "Flashlight",
+      "model": "w_me_flashlight",
+      "category": "GROUP_MELEE",
+      "defaults": [
+        {
+          "name": "COMPONENT_FLASHLIGHT_LIGHT",
+          "bone": "WAPFlsh"
+        }
+      ]
+    },
+    {
+      "name": "WEAPON_GOLFCLUB",
+      "label": "Golf Club",
+      "model": "w_me_gclub",
+      "category": "GROUP_MELEE",
+      "defaults": []
+    },
+    {
+      "name": "WEAPON_GRENADE",
+      "label": "Grenade",
+      "model": "w_ex_grenadefrag",
+      "category": "GROUP_THROWN",
+      "defaults": []
+    },
+    {
+      "name": "WEAPON_GRENADELAUNCHER",
+      "label": "Grenade Launcher",
+      "model": "w_lr_grenadelauncher",
+      "category": "GROUP_HEAVY",
+      "ammo": "ammo-grenade",
+      "defaults": [
+        {
+          "name": "COMPONENT_GRENADELAUNCHER_CLIP_01",
+          "bone": "WAPClip"
+        }
+      ]
+    },
+    {
+      "name": "WEAPON_GUSENBERG",
+      "label": "Gusenberg",
+      "model": "w_sb_gusenberg",
+      "category": "GROUP_MG",
+      "ammo": "ammo-45",
+      "defaults": [
+        {
+          "name": "COMPONENT_GUSENBERG_CLIP_01",
+          "bone": "WAPClip"
+        }
+      ]
+    },
+    {
+      "name": "WEAPON_HAMMER",
+      "label": "Hammer",
+      "model": "w_me_hammer",
+      "category": "GROUP_MELEE",
+      "defaults": []
+    },
+    {
+      "name": "WEAPON_HATCHET",
+      "label": "Hatchet",
+      "model": "w_me_hatchet",
+      "category": "GROUP_MELEE",
+      "defaults": []
+    },
+    {
+      "name": "WEAPON_HEAVYRIFLE",
+      "label": "Heavy Rifle",
+      "model": "w_ar_heavyrifleh",
+      "category": "GROUP_RIFLE",
+      "ammo": "ammo-rifle",
+      "defaults": [
+        {
+          "name": "COMPONENT_HEAVYRIFLE_CLIP_01",
+          "bone": "WAPClip"
+        },
+        {
+          "name": "COMPONENT_HEAVYRIFLE_SIGHT_01",
+          "bone": "WAPScop_3"
+        }
+      ]
+    },
+    {
+      "name": "WEAPON_HAZARDCAN",
+      "label": "Hazard Can",
+      "model": "w_ch_jerrycan",
+      "category": "GROUP_PETROLCAN",
+      "defaults": []
+    },
+    {
+      "name": "WEAPON_METALDETECTOR",
+      "label": "Metal Detector",
+      "model": "w_am_digiscanner_reh",
+      "category": "GROUP_METALDETECTOR",
+      "defaults": []
+    },
+    {
+      "name": "WEAPON_HOMINGLAUNCHER",
+      "label": "Homing Launcher",
+      "model": "w_lr_homing",
+      "category": "GROUP_HEAVY",
+      "ammo": "ammo-rocket",
+      "defaults": [
+        {
+          "name": "COMPONENT_HOMINGLAUNCHER_CLIP_01",
+          "bone": "WAPClip"
+        }
+      ]
+    },
+    {
+      "name": "WEAPON_FERTILIZERCAN",
+      "label": "Fertilizer Can",
+      "model": "W_AM_Jerrycan_SF",
+      "category": "GROUP_PETROLCAN",
+      "defaults": []
+    },
+    {
+      "name": "WEAPON_HEAVYPISTOL",
+      "label": "Heavy Pistol",
+      "model": "w_pi_heavypistol",
+      "category": "GROUP_PISTOL",
+      "ammo": "ammo-45",
+      "defaults": [
+        {
+          "name": "COMPONENT_HEAVYPISTOL_CLIP_01",
+          "bone": "WAPClip"
+        }
+      ]
+    },
+    {
+      "name": "WEAPON_HEAVYSHOTGUN",
+      "label": "Heavy Shotgun",
+      "model": "w_sg_heavyshotgun",
+      "category": "GROUP_SHOTGUN",
+      "ammo": "ammo-shotgun",
+      "defaults": [
+        {
+          "name": "COMPONENT_HEAVYSHOTGUN_CLIP_01",
+          "bone": "WAPClip"
+        }
+      ]
+    },
+    {
+      "name": "WEAPON_HEAVYSNIPER",
+      "label": "Heavy Sniper",
+      "model": "w_sr_heavysniper",
+      "category": "GROUP_SNIPER",
+      "ammo": "ammo-heavysniper",
+      "defaults": [
+        {
+          "name": "COMPONENT_HEAVYSNIPER_CLIP_01",
+          "bone": "WAPClip"
+        },
+        {
+          "name": "COMPONENT_AT_SCOPE_MAX",
+          "bone": "WAPScop"
+        }
+      ]
+    },
+    {
+      "name": "WEAPON_HEAVYSNIPER_MK2",
+      "label": "Heavy Sniper MK2",
+      "model": "w_sr_heavysnipermk2",
+      "category": "GROUP_SNIPER",
+      "ammo": "ammo-heavysniper",
+      "defaults": [
+        {
+          "name": "COMPONENT_HEAVYSNIPER_MK2_CLIP_01",
+          "bone": "WAPClip"
+        },
+        {
+          "name": "COMPONENT_AT_SCOPE_MAX",
+          "bone": "WAPScop"
+        },
+        {
+          "name": "COMPONENT_AT_SR_BARREL_01",
+          "bone": "WAPBarrel"
+        }
+      ]
+    },
+    {
+      "name": "WEAPON_KNIFE",
+      "label": "Knife",
+      "model": "w_me_knife_01",
+      "category": "GROUP_MELEE",
+      "defaults": []
+    },
+    {
+      "name": "WEAPON_KNUCKLE",
+      "label": "Knuckle Dusters",
+      "model": "W_ME_Knuckle",
+      "category": "GROUP_UNARMED",
+      "defaults": []
+    },
+    {
+      "name": "WEAPON_MACHETE",
+      "label": "Machete",
+      "model": "w_me_machette_lr",
+      "category": "GROUP_MELEE",
+      "defaults": []
+    },
+    {
+      "name": "WEAPON_MACHINEPISTOL",
+      "label": "Machine Pistol",
+      "model": "w_sb_compactsmg",
+      "category": "GROUP_SMG",
+      "ammo": "ammo-9",
+      "defaults": [
+        {
+          "name": "COMPONENT_MACHINEPISTOL_CLIP_01",
+          "bone": "WAPClip"
+        }
+      ]
+    },
+    {
+      "name": "WEAPON_MARKSMANPISTOL",
+      "label": "Marksman Pistol",
+      "model": "W_PI_SingleShot",
+      "category": "GROUP_PISTOL",
+      "ammo": "ammo-22",
+      "defaults": [
+        {
+          "name": "COMPONENT_MARKSMANPISTOL_CLIP_01",
+          "bone": "WAPClip"
+        }
+      ]
+    },
+    {
+      "name": "WEAPON_MARKSMANRIFLE",
+      "label": "Marksman Rifle",
+      "model": "w_sr_marksmanrifle",
+      "category": "GROUP_SNIPER",
+      "ammo": "ammo-sniper",
+      "defaults": [
+        {
+          "name": "COMPONENT_MARKSMANRIFLE_CLIP_01",
+          "bone": "WAPClip"
+        },
+        {
+          "name": "COMPONENT_AT_SCOPE_LARGE_FIXED_ZOOM",
+          "bone": "WAPScop_2"
+        }
+      ]
+    },
+    {
+      "name": "WEAPON_MARKSMANRIFLE_MK2",
+      "label": "Marksman Rifle MK2",
+      "model": "w_sr_marksmanriflemk2",
+      "category": "GROUP_SNIPER",
+      "ammo": "ammo-sniper",
+      "defaults": [
+        {
+          "name": "COMPONENT_MARKSMANRIFLE_MK2_CLIP_01",
+          "bone": "WAPClip"
+        },
+        {
+          "name": "COMPONENT_AT_SCOPE_LARGE_FIXED_ZOOM_MK2",
+          "bone": "WAPScop_2"
+        },
+        {
+          "name": "COMPONENT_AT_MRFL_BARREL_01",
+          "bone": "WAPBarrel"
+        }
+      ]
+    },
+    {
+      "name": "WEAPON_MG",
+      "label": "Machine Gun",
+      "model": "w_mg_mg",
+      "category": "GROUP_MG",
+      "ammo": "ammo-rifle2",
+      "defaults": [
+        {
+          "name": "COMPONENT_MG_CLIP_01",
+          "bone": "WAPClip"
+        }
+      ]
+    },
+    {
+      "name": "WEAPON_MINIGUN",
+      "label": "Minigun",
+      "model": "w_mg_minigun",
+      "category": "GROUP_HEAVY",
+      "ammo": "ammo-rifle2",
+      "defaults": [
+        {
+          "name": "COMPONENT_MINIGUN_CLIP_01",
+          "bone": "WAPClip"
+        }
+      ]
+    },
+    {
+      "name": "WEAPON_MICROSMG",
+      "label": "Micro SMG",
+      "model": "w_sb_microsmg",
+      "category": "GROUP_SMG",
+      "ammo": "ammo-45",
+      "defaults": [
+        {
+          "name": "COMPONENT_MICROSMG_CLIP_01",
+          "bone": "WAPClip"
+        }
+      ]
+    },
+    {
+      "name": "WEAPON_MILITARYRIFLE",
+      "label": "Military Rifle",
+      "model": "w_ar_bullpuprifleh4",
+      "category": "GROUP_RIFLE",
+      "ammo": "ammo-rifle",
+      "defaults": [
+        {
+          "name": "COMPONENT_MILITARYRIFLE_CLIP_01",
+          "bone": "WAPClip"
+        },
+        {
+          "name": "COMPONENT_MILITARYRIFLE_SIGHT_01",
+          "bone": "WAPScop_2"
+        }
+      ]
+    },
+    {
+      "name": "WEAPON_MINISMG",
+      "label": "Mini SMG",
+      "model": "w_sb_minismg",
+      "category": "GROUP_SMG",
+      "ammo": "ammo-9",
+      "defaults": [
+        {
+          "name": "COMPONENT_MINISMG_CLIP_01",
+          "bone": "WAPClip"
+        }
+      ]
+    },
+    {
+      "name": "WEAPON_MOLOTOV",
+      "label": "Molotov",
+      "model": "w_ex_molotov",
+      "category": "GROUP_THROWN",
+      "defaults": []
+    },
+    {
+      "name": "WEAPON_MUSKET",
+      "label": "Musket",
+      "model": "w_ar_musket",
+      "category": "GROUP_SNIPER",
+      "ammo": "ammo-musket",
+      "defaults": [
+        {
+          "name": "COMPONENT_MUSKET_CLIP_01",
+          "bone": "WAPClip"
+        }
+      ]
+    },
+    {
+      "name": "WEAPON_NAVYREVOLVER",
+      "label": "Navy Revolver",
+      "model": "w_pi_wep2_gun",
+      "category": "GROUP_PISTOL",
+      "ammo": "ammo-44",
+      "defaults": [
+        {
+          "name": "COMPONENT_NAVYREVOLVER_CLIP_01",
+          "bone": "WAPClip"
+        }
+      ]
+    },
+    {
+      "name": "WEAPON_NIGHTSTICK",
+      "label": "Nightstick",
+      "model": "w_me_nightstick",
+      "category": "GROUP_MELEE",
+      "defaults": []
+    },
+    {
+      "name": "WEAPON_PETROLCAN",
+      "label": "Jerry Can",
+      "model": "w_am_jerrycan",
+      "category": "GROUP_PETROLCAN",
+      "defaults": []
+    },
+    {
+      "name": "WEAPON_GADGETPISTOL",
+      "label": "Perico Pistol",
+      "model": "w_pi_singleshoth4",
+      "category": "GROUP_PISTOL",
+      "ammo": "ammo-9",
+      "defaults": [
+        {
+          "name": "COMPONENT_GADGETPISTOL_CLIP_01",
+          "bone": "WAPClip"
+        }
+      ]
+    },
+    {
+      "name": "WEAPON_PIPEBOMB",
+      "label": "Pipe Bomb",
+      "model": "w_ex_pipebomb",
+      "category": "GROUP_THROWN",
+      "defaults": []
+    },
+    {
+      "name": "WEAPON_PISTOL",
+      "label": "Pistol",
+      "model": "W_PI_PISTOL",
+      "category": "GROUP_PISTOL",
+      "ammo": "ammo-9",
+      "defaults": [
+        {
+          "name": "COMPONENT_PISTOL_CLIP_01",
+          "bone": "WAPClip"
+        }
+      ]
+    },
+    {
+      "name": "WEAPON_PISTOL50",
+      "label": "Pistol .50",
+      "model": "W_PI_PISTOL50",
+      "category": "GROUP_PISTOL",
+      "ammo": "ammo-50",
+      "defaults": [
+        {
+          "name": "COMPONENT_PISTOL50_CLIP_01",
+          "bone": "WAPClip"
+        }
+      ]
+    },
+    {
+      "name": "WEAPON_PISTOL_MK2",
+      "label": "Pistol MK2",
+      "model": "w_pi_pistolmk2",
+      "category": "GROUP_PISTOL",
+      "ammo": "ammo-9",
+      "defaults": [
+        {
+          "name": "COMPONENT_PISTOL_MK2_CLIP_01",
+          "bone": "WAPClip"
+        }
+      ]
+    },
+    {
+      "name": "WEAPON_POOLCUE",
+      "label": "Pool Cue",
+      "model": "w_me_poolcue",
+      "category": "GROUP_MELEE",
+      "defaults": []
+    },
+    {
+      "name": "WEAPON_CANDYCANE",
+      "label": "Candy Cane",
+      "model": "W_ME_Candy_XM3",
+      "category": "GROUP_MELEE",
+      "defaults": []
+    },
+    {
+      "name": "WEAPON_PROXMINE",
+      "label": "Proximity Mine",
+      "model": "w_ex_apmine",
+      "category": "GROUP_THROWN",
+      "defaults": []
+    },
+    {
+      "name": "WEAPON_PUMPSHOTGUN",
+      "label": "Pump Shotgun",
+      "model": "w_sg_pumpshotgun",
+      "category": "GROUP_SHOTGUN",
+      "ammo": "ammo-shotgun",
+      "defaults": [
+        {
+          "name": "COMPONENT_PUMPSHOTGUN_CLIP_01",
+          "bone": "WAPClip"
+        }
+      ]
+    },
+    {
+      "name": "WEAPON_PUMPSHOTGUN_MK2",
+      "label": "Pump Shotgun MK2",
+      "model": "w_sg_pumpshotgunmk2",
+      "category": "GROUP_SHOTGUN",
+      "ammo": "ammo-shotgun",
+      "defaults": [
+        {
+          "name": "COMPONENT_PUMPSHOTGUN_MK2_CLIP_01",
+          "bone": "WAPClip"
+        }
+      ]
+    },
+    {
+      "name": "WEAPON_RAILGUN",
+      "label": "Railgun",
+      "model": "w_ar_railgun",
+      "category": "GROUP_HEAVY",
+      "ammo": "ammo-railgun",
+      "defaults": [
+        {
+          "name": "COMPONENT_RAILGUN_CLIP_01",
+          "bone": "WAPClip"
+        }
+      ]
+    },
+    {
+      "name": "WEAPON_RAILGUNXM3",
+      "label": "Railgun XM3",
+      "model": "W_AR_RailGun_XM3",
+      "category": "GROUP_HEAVY",
+      "ammo": "ammo-railgun",
+      "defaults": [
+        {
+          "name": "COMPONENT_RAILGUNXM3_CLIP_01",
+          "bone": "WAPClip"
+        }
+      ]
+    },
+    {
+      "name": "WEAPON_RAYCARBINE",
+      "label": "Unholy Hellbringer",
+      "model": "w_ar_srifle",
+      "category": "GROUP_MG",
+      "ammo": "ammo-laser",
+      "defaults": []
+    },
+    {
+      "name": "WEAPON_RAYPISTOL",
+      "label": "Up-n-Atomizer",
+      "model": "w_pi_raygun",
+      "category": "GROUP_PISTOL",
+      "defaults": []
+    },
+    {
+      "name": "WEAPON_REVOLVER",
+      "label": "Revolver",
+      "model": "w_pi_revolver",
+      "category": "GROUP_PISTOL",
+      "ammo": "ammo-44",
+      "defaults": [
+        {
+          "name": "COMPONENT_REVOLVER_CLIP_01",
+          "bone": "WAPClip"
+        }
+      ]
+    },
+    {
+      "name": "WEAPON_REVOLVER_MK2",
+      "label": "Revolver MK2",
+      "model": "w_pi_revolvermk2",
+      "category": "GROUP_PISTOL",
+      "ammo": "ammo-44",
+      "defaults": [
+        {
+          "name": "COMPONENT_REVOLVER_MK2_CLIP_01",
+          "bone": "WAPClip"
+        }
+      ]
+    },
+    {
+      "name": "WEAPON_RPG",
+      "label": "RPG",
+      "model": "w_lr_rpg",
+      "category": "GROUP_HEAVY",
+      "ammo": "ammo-rocket",
+      "defaults": [
+        {
+          "name": "COMPONENT_RPG_CLIP_01",
+          "bone": "WAPClip"
+        }
+      ]
+    },
+    {
+      "name": "WEAPON_SAWNOFFSHOTGUN",
+      "label": "Sawn Off Shotgun",
+      "model": "w_sg_sawnoff",
+      "category": "GROUP_SHOTGUN",
+      "ammo": "ammo-shotgun",
+      "defaults": [
+        {
+          "name": "COMPONENT_SAWNOFFSHOTGUN_CLIP_01",
+          "bone": "WAPClip"
+        }
+      ]
+    },
+    {
+      "name": "WEAPON_SMG",
+      "label": "SMG",
+      "model": "w_sb_smg",
+      "category": "GROUP_SMG",
+      "ammo": "ammo-9",
+      "defaults": [
+        {
+          "name": "COMPONENT_SMG_CLIP_01",
+          "bone": "WAPClip"
+        }
+      ]
+    },
+    {
+      "name": "WEAPON_SMG_MK2",
+      "label": "SMG Mk2",
+      "model": "w_sb_smgmk2",
+      "category": "GROUP_SMG",
+      "ammo": "ammo-9",
+      "defaults": [
+        {
+          "name": "COMPONENT_SMG_MK2_CLIP_01",
+          "bone": "WAPClip"
+        },
+        {
+          "name": "COMPONENT_AT_SB_BARREL_01",
+          "bone": "WAPBarrel"
+        }
+      ]
+    },
+    {
+      "name": "WEAPON_SMOKEGRENADE",
+      "label": "Smoke Grenade",
+      "model": "w_ex_grenadesmoke",
+      "category": "GROUP_THROWN",
+      "defaults": []
+    },
+    {
+      "name": "WEAPON_SNIPERRIFLE",
+      "label": "Sniper Rifle",
+      "model": "w_sr_sniperrifle",
+      "category": "GROUP_SNIPER",
+      "ammo": "ammo-sniper",
+      "defaults": [
+        {
+          "name": "COMPONENT_SNIPERRIFLE_CLIP_01",
+          "bone": "WAPClip"
+        },
+        {
+          "name": "COMPONENT_AT_SCOPE_LARGE",
+          "bone": "WAPScop"
+        }
+      ]
+    },
+    {
+      "name": "WEAPON_SNOWBALL",
+      "label": "Snow Ball",
+      "model": "w_ex_snowball",
+      "category": "GROUP_THROWN",
+      "defaults": []
+    },
+    {
+      "name": "WEAPON_SNSPISTOL",
+      "label": "SNS Pistol",
+      "model": "w_pi_sns_pistol",
+      "category": "GROUP_PISTOL",
+      "ammo": "ammo-45",
+      "defaults": [
+        {
+          "name": "COMPONENT_SNSPISTOL_CLIP_01",
+          "bone": "WAPClip"
+        }
+      ]
+    },
+    {
+      "name": "WEAPON_SNSPISTOL_MK2",
+      "label": "SNS Pistol MK2",
+      "model": "w_pi_sns_pistolmk2",
+      "category": "GROUP_PISTOL",
+      "ammo": "ammo-45",
+      "defaults": [
+        {
+          "name": "COMPONENT_SNSPISTOL_MK2_CLIP_01",
+          "bone": "WAPClip"
+        }
+      ]
+    },
+    {
+      "name": "WEAPON_SPECIALCARBINE",
+      "label": "Special Carbine",
+      "model": "w_ar_specialcarbine",
+      "category": "GROUP_RIFLE",
+      "ammo": "ammo-rifle",
+      "defaults": [
+        {
+          "name": "COMPONENT_SPECIALCARBINE_CLIP_01",
+          "bone": "WAPClip"
+        }
+      ]
+    },
+    {
+      "name": "WEAPON_SPECIALCARBINE_MK2",
+      "label": "Special Carbine MK2",
+      "model": "w_ar_specialcarbinemk2",
+      "category": "GROUP_RIFLE",
+      "ammo": "ammo-rifle",
+      "defaults": [
+        {
+          "name": "COMPONENT_SPECIALCARBINE_MK2_CLIP_01",
+          "bone": "WAPClip"
+        },
+        {
+          "name": "COMPONENT_AT_SC_BARREL_01",
+          "bone": "WAPBarrel"
+        }
+      ]
+    },
+    {
+      "name": "WEAPON_STICKYBOMB",
+      "label": "Sticky Bomb",
+      "model": "w_ex_pe",
+      "category": "GROUP_THROWN",
+      "defaults": []
+    },
+    {
+      "name": "WEAPON_STONE_HATCHET",
+      "label": "Stone Hatchet",
+      "model": "w_me_stonehatchet",
+      "category": "GROUP_MELEE",
+      "defaults": []
+    },
+    {
+      "name": "WEAPON_STUNGUN",
+      "label": "Tazer",
+      "model": "w_pi_stungun",
+      "category": "GROUP_STUNGUN",
+      "defaults": []
+    },
+    {
+      "name": "WEAPON_AUTOSHOTGUN",
+      "label": "Sweeper Shotgun",
+      "model": "w_sg_sweeper",
+      "category": "GROUP_SHOTGUN",
+      "ammo": "ammo-shotgun",
+      "defaults": [
+        {
+          "name": "COMPONENT_AUTOSHOTGUN_CLIP_01",
+          "bone": "WAPClip"
+        }
+      ]
+    },
+    {
+      "name": "WEAPON_SWITCHBLADE",
+      "label": "Switchblade",
+      "model": "w_me_switchblade",
+      "category": "GROUP_MELEE",
+      "defaults": []
+    },
+    {
+      "name": "WEAPON_VINTAGEPISTOL",
+      "label": "Vintage Pistol",
+      "model": "w_pi_vintage_pistol",
+      "category": "GROUP_PISTOL",
+      "ammo": "ammo-9",
+      "defaults": [
+        {
+          "name": "COMPONENT_VINTAGEPISTOL_CLIP_01",
+          "bone": "WAPClip"
+        }
+      ]
+    },
+    {
+      "name": "WEAPON_RAYMINIGUN",
+      "label": "Widowmaker",
+      "model": "w_mg_sminigun",
+      "category": "GROUP_HEAVY",
+      "ammo": "ammo-laser",
+      "defaults": [
+        {
+          "name": "COMPONENT_MINIGUN_CLIP_01",
+          "bone": "WAPClip"
+        }
+      ]
+    },
+    {
+      "name": "WEAPON_WRENCH",
+      "label": "Wrench",
+      "model": "w_me_wrench",
+      "category": "GROUP_MELEE",
+      "defaults": []
+    },
+    {
+      "name": "WEAPON_PRECISIONRIFLE",
+      "label": "Precision Rifle",
+      "model": "W_SR_PrecisionRifle_REH",
+      "category": "GROUP_SNIPER",
+      "ammo": "ammo-sniper",
+      "defaults": [
+        {
+          "name": "COMPONENT_PRECISIONRIFLE_CLIP_01",
+          "bone": "WAPClip"
+        }
+      ]
+    },
+    {
+      "name": "WEAPON_TACTICALRIFLE",
+      "label": "Tactical Rifle",
+      "model": "W_AR_CARBINERIFLE_REH",
+      "category": "GROUP_RIFLE",
+      "ammo": "ammo-rifle",
+      "defaults": [
+        {
+          "name": "COMPONENT_TACTICALRIFLE_CLIP_01",
+          "bone": "WAPClip"
+        }
+      ]
+    },
+    {
+      "name": "WEAPON_TEARGAS",
+      "label": "Tear Gas",
+      "model": "w_ex_grenadesmoke",
+      "category": "GROUP_THROWN",
+      "defaults": []
+    }
+  ],
+  "ammo": [
+    {
+      "name": "ammo-22",
+      "label": ".22 Long Rifle",
+      "weight": 3
+    },
+    {
+      "name": "ammo-38",
+      "label": ".38 LC",
+      "weight": 15
+    },
+    {
+      "name": "ammo-44",
+      "label": ".44 Magnum",
+      "weight": 16
+    },
+    {
+      "name": "ammo-45",
+      "label": ".45 ACP",
+      "weight": 15
+    },
+    {
+      "name": "ammo-50",
+      "label": ".50 AE",
+      "weight": 45
+    },
+    {
+      "name": "ammo-9",
+      "label": "9mm",
+      "weight": 7
+    },
+    {
+      "name": "ammo-firework",
+      "label": "Firework",
+      "weight": 200
+    },
+    {
+      "name": "ammo-flare",
+      "label": "Flare round",
+      "weight": 38
+    },
+    {
+      "name": "ammo-grenade",
+      "label": "40mm Explosive",
+      "weight": 400
+    },
+    {
+      "name": "ammo-heavysniper",
+      "label": ".50 BMG",
+      "weight": 51
+    },
+    {
+      "name": "ammo-laser",
+      "label": "Laser charge",
+      "weight": 1
+    },
+    {
+      "name": "ammo-musket",
+      "label": ".50 Ball",
+      "weight": 38
+    },
+    {
+      "name": "ammo-railgun",
+      "label": "Railgun charge",
+      "weight": 150
+    },
+    {
+      "name": "ammo-rifle",
+      "label": "5.56x45",
+      "weight": 4
+    },
+    {
+      "name": "ammo-rifle2",
+      "label": "7.62x39",
+      "weight": 8
+    },
+    {
+      "name": "ammo-rocket",
+      "label": "Rocket",
+      "weight": 500
+    },
+    {
+      "name": "ammo-shotgun",
+      "label": "12 Gauge",
+      "weight": 38
+    },
+    {
+      "name": "ammo-sniper",
+      "label": "7.62x51",
+      "weight": 9
+    },
+    {
+      "name": "ammo-emp",
+      "label": "EMP round",
+      "weight": 400
+    }
+  ]
+}
