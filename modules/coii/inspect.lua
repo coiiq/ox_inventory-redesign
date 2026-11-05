@@ -1,6 +1,6 @@
 -- A local prop viewed through a fixed copy of the current camera. Disabling
 -- its depth-of-field keeps the near prop sharp without moving the viewpoint.
--- No ped, network entity, or inventory item is created or changed.
+-- The real player is hidden locally only while this preview renders.
 local Preview = {}
 local ZOOM_MIN,ZOOM_MAX=.65,2.5
 local viewDefaults={depth=1.5,light=.08}
@@ -205,6 +205,9 @@ end
 local function render(state)
     local entity=state.entity
     if not DoesEntityExist(entity) then error('Inspection entity was removed') end
+    -- Frame-local visibility ends naturally when this preview stops rendering.
+    local ped=cache.ped
+    if ped and ped~=0 and DoesEntityExist(ped) then SetEntityLocallyInvisible(ped) end
     -- Keep a broad sharp focus range on our own camera. A nearby metallic
     -- weapon must not inherit the gameplay camera's near-field blur settings.
     SetCamUseShallowDofMode(state.camera,false)
@@ -367,6 +370,30 @@ RegisterNUICallback('coiiInspectAnchors',function(data,cb)
     active.anchorsEnabled=data.enabled
     active.anchorLast=nil;active.anchorDirty=3;active.anchorCache=nil
     cb(true)
+end)
+-- Session-scoped local preview diagnostics. This can tune only the current
+-- preview plane/fill light; it cannot alter inventory items or other entities.
+RegisterNUICallback('coiiInspectView',function(data,cb)
+    if type(data)~='table' or not active or not isOpen() or data.session~=active.session then return cb(false) end
+    if data.depth~=nil and (not finite(data.depth) or data.depth<.35 or data.depth>6) then return cb(false) end
+    if data.light~=nil and (not finite(data.light) or data.light<0 or data.light>2) then return cb(false) end
+    if data.depth and data.depth~=active.depth then active.depth=data.depth;viewDefaults.depth=data.depth;active.fit=nil;active.anchorLast=nil end
+    if data.light~=nil then active.light=data.light;viewDefaults.light=data.light end
+    local function read(fn,...)
+        if type(fn)~='function' then return end
+        local ok,value=pcall(fn,...)
+        if ok then return value end
+    end
+    local parts={}
+    for _,part in ipairs(active.parts or {}) do
+        local model=read(GetWeaponComponentTypeModel,part.hash)
+        local body=part.hash==active.bodyComponent
+        local applied=body and read(GetEntityModel,active.entity)==active.model or not body and read(HasWeaponGotWeaponComponent,active.entity,part.hash)
+        parts[#parts+1]={name=part.name,type=part.type,hash=part.hash,applied=applied,body=body,
+            model=model,modelValid=model and read(IsModelValid,model),modelInCdimage=model and read(IsModelInCdimage,model),modelLoaded=model and read(HasModelLoaded,model)}
+    end
+    cb({name=active.name,depth=active.depth,light=active.light,zoom=active.zoom,targetZoom=active.targetZoom,entityModel=read(GetEntityModel,active.entity),
+        cameraOwned=GetRenderingCam()==active.camera,parts=parts})
 end)
 AddEventHandler('onResourceStop',function(resource) if resource==GetCurrentResourceName() then Preview.close(nil,false) end end)
 return Preview
