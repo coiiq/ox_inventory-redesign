@@ -78,6 +78,7 @@ return {
 			id = 110, colour = 69, scale = 0.8
 		}, inventory = {
 			{ name = 'ammo-9', price = 5, },
+            { name = 'ammo-box-9', price = 150 },
 			{ name = 'WEAPON_KNIFE', price = 200 },
 			{ name = 'WEAPON_BAT', price = 100 },
 			{ name = 'WEAPON_PISTOL', price = 1000, metadata = { registered = true }, license = 'weapon' }
@@ -112,6 +113,8 @@ return {
 		}, inventory = {
 			{ name = 'ammo-9', price = 5, },
 			{ name = 'ammo-rifle', price = 5, },
+            { name = 'ammo-box-9', price = 150 },
+            { name = 'ammo-box-rifle', price = 150 },
 			{ name = 'WEAPON_FLASHLIGHT', price = 200 },
 			{ name = 'WEAPON_NIGHTSTICK', price = 100 },
 			{ name = 'WEAPON_PISTOL', price = 500, metadata = { registered = true, serial = 'POL' }, license = 'weapon' },
@@ -133,6 +136,7 @@ return {
 			id = 403, colour = 69, scale = 0.8
 		}, inventory = {
 			{ name = 'medikit', price = 26 },
+			{ name = 'medical_syringe', price = 75 },
 			{ name = 'bandage', price = 5 }
 		}, locations = {
 			vec3(306.3687, -601.5139, 43.28406)
@@ -148,7 +152,9 @@ return {
 			{ name = 'WEAPON_CERAMICPISTOL', price = 50000, metadata = { registered = false }, currency = 'black_money' },
 			{ name = 'at_suppressor_light', price = 50000, currency = 'black_money' },
 			{ name = 'ammo-rifle', price = 1000, currency = 'black_money' },
-			{ name = 'ammo-rifle2', price = 1000, currency = 'black_money' }
+			{ name = 'ammo-rifle2', price = 1000, currency = 'black_money' },
+            { name = 'ammo-box-rifle', price = 30000, currency = 'black_money' },
+            { name = 'ammo-box-rifle2', price = 30000, currency = 'black_money' },
 		}, locations = {
 			vec3(309.09, -913.75, 56.46)
 		}, targets = {

@@ -1,6 +1,9 @@
 return {
+	-- Explicit inspect props. Weapon short aliases resolve through GTA's weapon model native.
+	-- Remove prop from an entry to disable Inspect, or use an exact object model name.
 	Weapons = {
 		['WEAPON_BATTLERIFLE'] = {
+			prop = 'battlerifle',
 			label = 'Battle Rifle',
 			weight = 3300,
 			durability = 0.03,
@@ -8,6 +11,7 @@ return {
 		},
 
 		['WEAPON_SNOWLAUNCHER'] = {
+			prop = 'snowlauncher',
 			label = 'Snowball Launcher',
 			weight = 1000,
 			durability = 0.03,
@@ -15,6 +19,7 @@ return {
 		},
 
 		['WEAPON_TECPISTOL'] = {
+			prop = 'tecpistol',
 			label = 'Tactical SMG',
 			weight = 1500,
 			durability = 0.075,
@@ -22,6 +27,7 @@ return {
 		},
 
 		['WEAPON_ADVANCEDRIFLE'] = {
+			prop = 'advancedrifle',
 			label = 'Advanced Rifle',
 			weight = 3100,
 			durability = 0.03,
@@ -29,6 +35,7 @@ return {
 		},
 
 		['WEAPON_APPISTOL'] = {
+			prop = 'appistol',
 			label = 'AP Pistol',
 			weight = 1400,
 			durability = 0.1,
@@ -36,6 +43,7 @@ return {
 		},
 
 		['WEAPON_ASSAULTRIFLE'] = {
+			prop = 'assaultrifle',
 			label = 'Assault Rifle',
 			weight = 4500,
 			durability = 0.03,
@@ -43,6 +51,7 @@ return {
 		},
 
 		['WEAPON_ASSAULTRIFLE_MK2'] = {
+			prop = 'assaultrifle_mk2',
 			label = 'Assault Rifle MK2',
 			weight = 2950,
 			durability = 0.03,
@@ -50,6 +59,7 @@ return {
 		},
 
 		['WEAPON_ASSAULTSHOTGUN'] = {
+			prop = 'assaultshotgun',
 			label = 'Assault Shotgun',
 			weight = 5200,
 			durability = 0.05,
@@ -57,6 +67,7 @@ return {
 		},
 
 		['WEAPON_ASSAULTSMG'] = {
+			prop = 'assaultsmg',
 			label = 'Assault SMG',
 			weight = 2900,
 			durability = 0.05,
@@ -64,30 +75,35 @@ return {
 		},
 
 		['WEAPON_BALL'] = {
+			prop = 'ball',
 			label = 'Ball',
 			weight = 149,
 			throwable = true,
 		},
 
 		['WEAPON_BAT'] = {
+			prop = 'bat',
 			label = 'Bat',
 			weight = 1134,
 			durability = 0.1,
 		},
 
 		['WEAPON_BATTLEAXE'] = {
+			prop = 'battleaxe',
 			label = 'Battle Axe',
 			weight = 6500,
 			durability = 0.1,
 		},
 
 		['WEAPON_BOTTLE'] = {
+			prop = 'bottle',
 			label = 'Bottle',
 			weight = 350,
 			durability = 0.1,
 		},
 
 		['WEAPON_BULLPUPRIFLE'] = {
+			prop = 'bullpuprifle',
 			label = 'Bullpup Rifle',
 			weight = 2900,
 			durability = 0.03,
@@ -95,6 +111,7 @@ return {
 		},
 
 		['WEAPON_BULLPUPRIFLE_MK2'] = {
+			prop = 'bullpuprifle_mk2',
 			label = 'Bullpup Rifle MK2',
 			weight = 2900,
 			durability = 0.03,
@@ -102,6 +119,7 @@ return {
 		},
 
 		['WEAPON_BULLPUPSHOTGUN'] = {
+			prop = 'bullpupshotgun',
 			label = 'Bullpup Shotgun',
 			weight = 3100,
 			durability = 0.2,
@@ -109,12 +127,14 @@ return {
 		},
 
 		['WEAPON_BZGAS'] = {
+			prop = 'bzgas',
 			label = 'BZ Gas',
 			weight = 600,
 			throwable = true,
 		},
 
 		['WEAPON_CARBINERIFLE'] = {
+			prop = 'carbinerifle',
 			label = 'Carbine Rifle',
 			weight = 3100,
 			durability = 0.03,
@@ -122,6 +142,7 @@ return {
 		},
 
 		['WEAPON_CARBINERIFLE_MK2'] = {
+			prop = 'carbinerifle_mk2',
 			label = 'Carbine Rifle MK2',
 			weight = 3000,
 			durability = 0.03,
@@ -129,6 +150,7 @@ return {
 		},
 
 		['WEAPON_CERAMICPISTOL'] = {
+			prop = 'ceramicpistol',
 			label = 'Ceramic Pistol',
 			weight = 800,
 			durability = 0.2,
@@ -136,6 +158,7 @@ return {
 		},
 
 		['WEAPON_PISTOLXM3'] = {
+			prop = 'pistolxm3',
 			label = 'WM 29 Pistol',
 			weight = 969,
 			durability = 0.2,
@@ -143,6 +166,7 @@ return {
 		},
 
 		['WEAPON_COMBATMG'] = {
+			prop = 'combatmg',
 			label = 'Combat MG',
 			weight = 7500,
 			durability = 0.02,
@@ -150,6 +174,7 @@ return {
 		},
 
 		['WEAPON_COMBATMG_MK2'] = {
+			prop = 'combatmg_mk2',
 			label = 'Combat MG MK2',
 			weight = 8000,
 			durability = 0.02,
@@ -157,6 +182,7 @@ return {
 		},
 
 		['WEAPON_COMBATPDW'] = {
+			prop = 'combatpdw',
 			label = 'Combat PDW',
 			weight = 2300,
 			durability = 0.1,
@@ -164,6 +190,7 @@ return {
 		},
 
 		['WEAPON_COMBATPISTOL'] = {
+			prop = 'combatpistol',
 			label = 'Combat Pistol',
 			weight = 785,
 			durability = 0.2,
@@ -171,6 +198,7 @@ return {
 		},
 
 		['WEAPON_COMBATSHOTGUN'] = {
+			prop = 'combatshotgun',
 			label = 'Combat Shotgun',
 			weight = 4400,
 			durability = 0.2,
@@ -178,6 +206,7 @@ return {
 		},
 
 		['WEAPON_COMPACTLAUNCHER'] = {
+			prop = 'compactlauncher',
 			label = 'Compact Grenade Launcher',
 			weight = 2500,
 			durability = 0.05,
@@ -185,6 +214,7 @@ return {
 		},
 
 		['WEAPON_COMPACTRIFLE'] = {
+			prop = 'compactrifle',
 			label = 'Compact Rifle',
 			weight = 3600,
 			durability = 0.05,
@@ -192,18 +222,21 @@ return {
 		},
 
 		['WEAPON_CROWBAR'] = {
+			prop = 'crowbar',
 			label = 'Crowbar',
 			weight = 2500,
 			durability = 0.1,
 		},
 
 		['WEAPON_DAGGER'] = {
+			prop = 'dagger',
 			label = 'Dagger',
 			weight = 800,
 			durability = 0.1,
 		},
 
 		['WEAPON_DBSHOTGUN'] = {
+			prop = 'dbshotgun',
 			label = 'Double Barrel Shotgun',
 			weight = 3175,
 			durability = 0.4,
@@ -211,6 +244,7 @@ return {
 		},
 
 		['WEAPON_DOUBLEACTION'] = {
+			prop = 'doubleaction',
 			label = 'Double Action Revolver',
 			weight = 940,
 			durability = 0.2,
@@ -218,6 +252,7 @@ return {
 		},
 
 		['WEAPON_EMPLAUNCHER'] = {
+			prop = 'emplauncher',
 			label = 'Compact EMP Launcher',
 			weight = 2750,
 			durability = 0.2,
@@ -225,12 +260,14 @@ return {
 		},
 
 		['WEAPON_FIREEXTINGUISHER'] = {
+			prop = 'fireextinguisher',
 			label = 'Fire Extinguisher',
 			weight = 8616,
             durability = 0.006
 		},
 
 		['WEAPON_FIREWORK'] = {
+			prop = 'firework',
 			label = 'Firework Launcher',
 			weight = 1000,
 			durability = 0.5,
@@ -238,12 +275,14 @@ return {
 		},
 
 		['WEAPON_FLARE'] = {
+			prop = 'flare',
 			label = 'Flare',
 			weight = 250,
 			throwable = true,
 		},
 
 		['WEAPON_FLAREGUN'] = {
+			prop = 'flaregun',
 			label = 'Flare Gun',
 			weight = 1000,
 			durability = 0.5,
@@ -251,24 +290,28 @@ return {
 		},
 
 		['WEAPON_FLASHLIGHT'] = {
+			prop = 'flashlight',
 			label = 'Flashlight',
 			weight = 125,
 			durability = 0.1,
 		},
 
 		['WEAPON_GOLFCLUB'] = {
+			prop = 'golfclub',
 			label = 'Golf Club',
 			weight = 330,
 			durability = 0.1,
 		},
 
 		['WEAPON_GRENADE'] = {
+			prop = 'grenade',
 			label = 'Grenade',
 			weight = 400,
 			throwable = true,
 		},
 
 		['WEAPON_GRENADELAUNCHER'] = {
+			prop = 'grenadelauncher',
 			label = 'Grenade Launcher',
 			weight = 6500,
 			durability = 0.05,
@@ -276,6 +319,7 @@ return {
 		},
 
 		['WEAPON_GUSENBERG'] = {
+			prop = 'gusenberg',
 			label = 'Gusenberg',
 			weight = 4900,
 			durability = 0.04,
@@ -283,18 +327,21 @@ return {
 		},
 
 		['WEAPON_HAMMER'] = {
+			prop = 'hammer',
 			label = 'Hammer',
 			weight = 1200,
 			durability = 0.1,
 		},
 
 		['WEAPON_HATCHET'] = {
+			prop = 'hatchet',
 			label = 'Hatchet',
 			weight = 1000,
 			durability = 0.1,
 		},
 
 		['WEAPON_HEAVYRIFLE'] = {
+			prop = 'heavyrifle',
 			label = 'Heavy Rifle',
 			weight = 3300,
 			durability = 0.2,
@@ -302,16 +349,19 @@ return {
 		},
 
 		['WEAPON_HAZARDCAN'] = {
+			prop = 'hazardcan',
 			label = 'Hazard Can',
 			weight = 12000,
 		},
 
 		['WEAPON_METALDETECTOR'] = {
+			prop = 'metaldetector',
 			label = 'Metal Detector',
 			weight = 1200,
 		},
 
 		['WEAPON_HOMINGLAUNCHER'] = {
+			prop = 'hominglauncher',
 			label = 'Homing Launcher',
 			weight = 10000,
 			durability = 0.6,
@@ -319,11 +369,13 @@ return {
 		},
 
 		['WEAPON_FERTILIZERCAN'] = {
+			prop = 'fertilizercan',
 			label = 'Fertilizer Can',
 			weight = 12000,
 		},
 
 		['WEAPON_HEAVYPISTOL'] = {
+			prop = 'heavypistol',
 			label = 'Heavy Pistol',
 			weight = 1100,
 			durability = 0.2,
@@ -331,6 +383,7 @@ return {
 		},
 
 		['WEAPON_HEAVYSHOTGUN'] = {
+			prop = 'heavyshotgun',
 			label = 'Heavy Shotgun',
 			weight = 3600,
 			durability = 0.1,
@@ -338,6 +391,7 @@ return {
 		},
 
 		['WEAPON_HEAVYSNIPER'] = {
+			prop = 'heavysniper',
 			label = 'Heavy Sniper',
 			weight = 12700,
 			durability = 0.5,
@@ -345,6 +399,7 @@ return {
 		},
 
 		['WEAPON_HEAVYSNIPER_MK2'] = {
+			prop = 'heavysniper_mk2',
 			label = 'Heavy Sniper MK2',
 			weight = 14000,
 			durability = 0.5,
@@ -352,24 +407,28 @@ return {
 		},
 
 		['WEAPON_KNIFE'] = {
+			prop = 'knife',
 			label = 'Knife',
 			weight = 300,
 			durability = 0.1,
 		},
 
 		['WEAPON_KNUCKLE'] = {
+			prop = 'knuckle',
 			label = 'Knuckle Dusters',
 			weight = 300,
 			durability = 0.1,
 		},
 
 		['WEAPON_MACHETE'] = {
+			prop = 'machete',
 			label = 'Machete',
 			weight = 1000,
 			durability = 0.1,
 		},
 
 		['WEAPON_MACHINEPISTOL'] = {
+			prop = 'machinepistol',
 			label = 'Machine Pistol',
 			weight = 1400,
 			durability = 0.05,
@@ -377,6 +436,7 @@ return {
 		},
 
 		['WEAPON_MARKSMANPISTOL'] = {
+			prop = 'marksmanpistol',
 			label = 'Marksman Pistol',
 			weight = 1588,
 			durability = 0.5,
@@ -384,6 +444,7 @@ return {
 		},
 
 		['WEAPON_MARKSMANRIFLE'] = {
+			prop = 'marksmanrifle',
 			label = 'Marksman Rifle',
 			weight = 7500,
 			durability = 0.4,
@@ -391,6 +452,7 @@ return {
 		},
 
 		['WEAPON_MARKSMANRIFLE_MK2'] = {
+			prop = 'marksmanrifle_mk2',
 			label = 'Marksman Rifle MK2',
 			weight = 4000,
 			durability = 0.4,
@@ -398,6 +460,7 @@ return {
 		},
 
 		['WEAPON_MG'] = {
+			prop = 'mg',
 			label = 'Machine Gun',
 			weight = 9000,
 			durability = 0.02,
@@ -405,6 +468,7 @@ return {
 		},
 
 		['WEAPON_MINIGUN'] = {
+			prop = 'minigun',
 			label = 'Minigun',
 			weight = 38500,
 			durability = 0.1,
@@ -412,6 +476,7 @@ return {
 		},
 
 		['WEAPON_MICROSMG'] = {
+			prop = 'microsmg',
 			label = 'Micro SMG',
 			weight = 3000,
 			durability = 0.1,
@@ -419,6 +484,7 @@ return {
 		},
 
 		['WEAPON_MILITARYRIFLE'] = {
+			prop = 'militaryrifle',
 			label = 'Military Rifle',
 			weight = 3600,
 			durability = 0.03,
@@ -426,6 +492,7 @@ return {
 		},
 
 		['WEAPON_MINISMG'] = {
+			prop = 'minismg',
 			label = 'Mini SMG',
 			weight = 1270,
 			durability = 0.05,
@@ -433,12 +500,14 @@ return {
 		},
 
 		['WEAPON_MOLOTOV'] = {
+			prop = 'molotov',
 			label = 'Molotov',
 			weight = 1800,
 			throwable = true,
 		},
 
 		['WEAPON_MUSKET'] = {
+			prop = 'musket',
 			label = 'Musket',
 			weight = 4500,
 			durability = 0.5,
@@ -446,6 +515,7 @@ return {
 		},
 
 		['WEAPON_NAVYREVOLVER'] = {
+			prop = 'navyrevolver',
 			label = 'Navy Revolver',
 			weight = 4000,
 			durability = 0.2,
@@ -453,17 +523,20 @@ return {
 		},
 
 		['WEAPON_NIGHTSTICK'] = {
+			prop = 'nightstick',
 			label = 'Nightstick',
 			weight = 1000,
 			durability = 0.1,
 		},
 
 		['WEAPON_PETROLCAN'] = {
+			prop = 'petrolcan',
 			label = 'Jerry Can',
 			weight = 4000,
 		},
 
 		['WEAPON_GADGETPISTOL'] = {
+			prop = 'gadgetpistol',
 			label = 'Perico Pistol',
 			weight = 1750,
 			durability = 0.1,
@@ -471,12 +544,14 @@ return {
 		},
 
 		['WEAPON_PIPEBOMB'] = {
+			prop = 'pipebomb',
 			label = 'Pipe Bomb',
 			weight = 1800,
 			throwable = true,
 		},
 
 		['WEAPON_PISTOL'] = {
+			prop = 'pistol',
 			label = 'Pistol',
 			weight = 1130,
 			durability = 0.1,
@@ -484,6 +559,7 @@ return {
 		},
 
 		['WEAPON_PISTOL50'] = {
+			prop = 'pistol50',
 			label = 'Pistol .50',
 			weight = 2000,
 			durability = 0.1,
@@ -491,6 +567,7 @@ return {
 		},
 
 		['WEAPON_PISTOL_MK2'] = {
+			prop = 'pistol_mk2',
 			label = 'Pistol MK2',
 			weight = 1000,
 			durability = 0.5,
@@ -498,24 +575,28 @@ return {
 		},
 
 		['WEAPON_POOLCUE'] = {
+			prop = 'poolcue',
 			label = 'Pool Cue',
 			weight = 146,
 			durability = 0.1,
 		},
 
 		['WEAPON_CANDYCANE'] = {
+			prop = 'candycane',
 			label = 'Candy Cane',
 			weight = 85,
 			durability = 0.1,
 		},
 
 		['WEAPON_PROXMINE'] = {
+			prop = 'proxmine',
 			label = 'Proximity Mine',
 			weight = 2500,
 			throwable = true,
 		},
 
 		['WEAPON_PUMPSHOTGUN'] = {
+			prop = 'pumpshotgun',
 			label = 'Pump Shotgun',
 			weight = 3400,
 			durability = 0.1,
@@ -523,6 +604,7 @@ return {
 		},
 
 		['WEAPON_PUMPSHOTGUN_MK2'] = {
+			prop = 'pumpshotgun_mk2',
 			label = 'Pump Shotgun MK2',
 			weight = 3200,
 			durability = 0.1,
@@ -530,6 +612,7 @@ return {
 		},
 
 		['WEAPON_RAILGUN'] = {
+			prop = 'railgun',
 			label = 'Railgun',
 			weight = 3570,
 			durability = 0.5,
@@ -537,6 +620,7 @@ return {
 		},
 
 		['WEAPON_RAILGUNXM3'] = {
+			prop = 'railgunxm3',
 			label = 'Railgun XM3',
 			weight = 3570,
 			durability = 0.5,
@@ -544,6 +628,7 @@ return {
 		},
 
 		['WEAPON_RAYCARBINE'] = {
+			prop = 'raycarbine',
 			label = 'Unholy Hellbringer',
 			weight = 3620,
 			durability = 0.2,
@@ -551,12 +636,14 @@ return {
 		},
 
 		['WEAPON_RAYPISTOL'] = {
+			prop = 'raypistol',
 			label = 'Up-n-Atomizer',
 			weight = 1540,
 			durability = 0.5
 		},
 
 		['WEAPON_REVOLVER'] = {
+			prop = 'revolver',
 			label = 'Revolver',
 			weight = 2260,
 			durability = 0.1,
@@ -564,6 +651,7 @@ return {
 		},
 
 		['WEAPON_REVOLVER_MK2'] = {
+			prop = 'revolver_mk2',
 			label = 'Revolver MK2',
 			weight = 2600,
 			durability = 0.1,
@@ -571,6 +659,7 @@ return {
 		},
 
 		['WEAPON_RPG'] = {
+			prop = 'rpg',
 			label = 'RPG',
 			weight = 5000,
 			durability = 0.3,
@@ -578,6 +667,7 @@ return {
 		},
 
 		['WEAPON_SAWNOFFSHOTGUN'] = {
+			prop = 'sawnoffshotgun',
 			label = 'Sawn Off Shotgun',
 			weight = 2380,
 			durability = 0.1,
@@ -585,6 +675,7 @@ return {
 		},
 
 		['WEAPON_SMG'] = {
+			prop = 'smg',
 			label = 'SMG',
 			weight = 3084,
 			durability = 0.8,
@@ -592,6 +683,7 @@ return {
 		},
 
 		['WEAPON_SMG_MK2'] = {
+			prop = 'smg_mk2',
 			label = 'SMG Mk2',
 			weight = 2700,
 			durability = 0.05,
@@ -599,12 +691,14 @@ return {
 		},
 
 		['WEAPON_SMOKEGRENADE'] = {
+			prop = 'smokegrenade',
 			label = 'Smoke Grenade',
 			weight = 600,
 			throwable = true,
 		},
 
 		['WEAPON_SNIPERRIFLE'] = {
+			prop = 'sniperrifle',
 			label = 'Sniper Rifle',
 			weight = 5000,
 			durability = 0.5,
@@ -612,12 +706,14 @@ return {
 		},
 
 		['WEAPON_SNOWBALL'] = {
+			prop = 'snowball',
 			label = 'Snow Ball',
 			weight = 5,
 			throwable = true,
 		},
 
 		['WEAPON_SNSPISTOL'] = {
+			prop = 'snspistol',
 			label = 'SNS Pistol',
 			weight = 465,
 			durability = 0.1,
@@ -625,6 +721,7 @@ return {
 		},
 
 		['WEAPON_SNSPISTOL_MK2'] = {
+			prop = 'snspistol_mk2',
 			label = 'SNS Pistol MK2',
 			weight = 465,
 			durability = 0.1,
@@ -632,6 +729,7 @@ return {
 		},
 
 		['WEAPON_SPECIALCARBINE'] = {
+			prop = 'specialcarbine',
 			label = 'Special Carbine',
 			weight = 3000,
 			durability = 0.03,
@@ -639,6 +737,7 @@ return {
 		},
 
 		['WEAPON_SPECIALCARBINE_MK2'] = {
+			prop = 'specialcarbine_mk2',
 			label = 'Special Carbine MK2',
 			weight = 3370,
 			durability = 0.03,
@@ -646,24 +745,28 @@ return {
 		},
 
 		['WEAPON_STICKYBOMB'] = {
+			prop = 'stickybomb',
 			label = 'Sticky Bomb',
 			weight = 1000,
 			throwable = true,
 		},
 
 		['WEAPON_STONE_HATCHET'] = {
+			prop = 'stone_hatchet',
 			label = 'Stone Hatchet',
 			weight = 800,
 			durability = 0.1,
 		},
 
 		['WEAPON_STUNGUN'] = {
+			prop = 'stungun',
 			label = 'Tazer',
 			weight = 227,
 			durability = 0.1,
 		},
 
 		['WEAPON_AUTOSHOTGUN'] = {
+			prop = 'autoshotgun',
 			label = 'Sweeper Shotgun',
 			weight = 4400,
 			durability = 0.05,
@@ -671,6 +774,7 @@ return {
 		},
 
 		['WEAPON_SWITCHBLADE'] = {
+			prop = 'switchblade',
 			label = 'Switchblade',
 			weight = 300,
 			durability = 0.1,
@@ -678,6 +782,7 @@ return {
 		},
 
 		['WEAPON_VINTAGEPISTOL'] = {
+			prop = 'vintagepistol',
 			label = 'Vintage Pistol',
 			weight = 700,
 			durability = 0.1,
@@ -685,6 +790,7 @@ return {
 		},
 
 		['WEAPON_RAYMINIGUN'] = {
+			prop = 'rayminigun',
 			label = 'Widowmaker',
 			weight = 7000,
 			durability = 0.1,
@@ -692,12 +798,14 @@ return {
 		},
 
 		['WEAPON_WRENCH'] = {
+			prop = 'wrench',
 			label = 'Wrench',
 			weight = 2500,
 			durability = 0.1,
 		},
 
 		['WEAPON_PRECISIONRIFLE'] = {
+			prop = 'precisionrifle',
 			label = 'Precision Rifle',
 			weight = 4800,
 			durability = 0.4,
@@ -705,6 +813,7 @@ return {
 		},
 
 		['WEAPON_TACTICALRIFLE'] = {
+			prop = 'tacticalrifle',
 			label = 'Tactical Rifle',
 			weight = 3400,
 			durability = 0.03,
@@ -712,6 +821,7 @@ return {
 		},
 
 		['WEAPON_TEARGAS'] = {
+			prop = 'teargas',
 			label = 'Tear Gas',
 			weight = 600,
 			throwable = true,

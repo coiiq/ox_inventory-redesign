@@ -1,58 +1,42 @@
+local medical=lib.load('data.coii_medical')
 return {
-	['testburger'] = {
-		label = 'Test Burger',
-		weight = 220,
-		degrade = 60,
-		client = {
-			image = 'burger_chicken.png',
-			status = { hunger = 200000 },
-			anim = 'eating',
-			prop = 'burger',
-			usetime = 2500,
-			export = 'ox_inventory_examples.testburger'
-		},
-		server = {
-			export = 'ox_inventory_examples.testburger',
-			test = 'what an amazingly delicious burger, amirite?'
-		},
-		buttons = {
-			{
-				label = 'Lick it',
-				action = function(slot)
-					print('You licked the burger')
-				end
-			},
-			{
-				label = 'Squeeze it',
-				action = function(slot)
-					print('You squeezed the burger :(')
-				end
-			},
-			{
-				label = 'What do you call a vegan burger?',
-				group = 'Hamburger Puns',
-				action = function(slot)
-					print('A misteak.')
-				end
-			},
-			{
-				label = 'What do frogs like to eat with their hamburgers?',
-				group = 'Hamburger Puns',
-				action = function(slot)
-					print('French flies.')
-				end
-			},
-			{
-				label = 'Why were the burger and fries running?',
-				group = 'Hamburger Puns',
-				action = function(slot)
-					print('Because they\'re fast food.')
-				end
-			}
-		},
-		consume = 0.3
+    ['medical_syringe'] = {
+        label = 'Medical Syringe', weight = 80, stack = true, close = true, consume = 1,
+        prop = 'prop_syringe_01',
+        description = ('A single-use medical syringe. Restores up to %d health after injection.'):format(medical.heal),
+        client = {
+            export = 'ox_inventory.medicalSyringe', anim = medical.anim, prop = medical.prop, usetime = medical.duration,
+            cancel = true, label = 'Injecting medical syringe', disable = { move = true, car = true, combat = true },
+        },
+        server = { export = 'ox_inventory.medicalSyringe' },
+    },
+    ['ammo-box-9'] = {
+        label = '9mm Ammo Box', weight = 230, stack = true, close = true,
+        ammo = true, ammoBox = 'ammo-9', consume = 0,
+        description = '30 rounds of 9mm pistol ammunition. Use with a compatible equipped weapon.',
+    },
+    ['ammo-box-rifle'] = {
+        label = '5.56 Ammo Box', weight = 140, stack = true, close = true,
+        ammo = true, ammoBox = 'ammo-rifle', consume = 0,
+        description = '30 rounds of 5.56 rifle ammunition. Use with a compatible equipped weapon.',
+    },
+    ['ammo-box-rifle2'] = {
+        label = '7.62 Ammo Box', weight = 260, stack = true, close = true,
+        ammo = true, ammoBox = 'ammo-rifle2', consume = 0,
+        description = '30 rounds of 7.62x39 rifle ammunition. Use with a compatible equipped weapon.',
+    },
+	-- Optional 3D inspection model: prop = 'prop_name', or
+	-- prop = { model = 'prop_name', rotation = { x = 0, y = 0, z = 0 } }.
+	-- Without this top-level field there is no Inspect action. client.prop is
+	-- separate and continues to control consumption animations only.
+	['backpack'] = {
+		prop = 'p_michael_backpack_s',
+		label = 'Backpack',
+		weight = 750,
+		stack = false,
+		close = false,
+		description = 'An additional carry compartment.'
 	},
-
 	['bandage'] = {
 		label = 'Bandage',
 		weight = 115,
@@ -69,6 +53,7 @@ return {
 	},
 
 	['burger'] = {
+		prop = 'prop_cs_burger_01',
 		label = 'Burger',
 		weight = 220,
 		client = {
@@ -175,6 +160,7 @@ return {
 	},
 
 	['water'] = {
+		prop = 'prop_ld_flow_bottle',
 		label = 'Water',
 		weight = 500,
 		client = {
@@ -221,5 +207,208 @@ return {
 	['scrapmetal'] = {
 		label = 'Scrap Metal',
 		weight = 80,
+	},
+
+	["alive_chicken"] = {
+		label = "Living chicken",
+		weight = 1,
+		stack = true,
+		close = true,
+	},
+
+	["blowpipe"] = {
+		label = "Blowtorch",
+		weight = 2,
+		stack = true,
+		close = true,
+	},
+
+	["bread"] = {
+		label = "Bread",
+		weight = 1,
+		stack = true,
+		close = true,
+	},
+
+	["cannabis"] = {
+		label = "Cannabis",
+		weight = 3,
+		stack = true,
+		close = true,
+	},
+
+	["carokit"] = {
+		label = "Body Kit",
+		weight = 3,
+		stack = true,
+		close = true,
+	},
+
+	["carotool"] = {
+		label = "Tools",
+		weight = 2,
+		stack = true,
+		close = true,
+	},
+
+	["clothe"] = {
+		label = "Cloth",
+		weight = 1,
+		stack = true,
+		close = true,
+	},
+
+	["copper"] = {
+		label = "Copper",
+		weight = 1,
+		stack = true,
+		close = true,
+	},
+
+	["cutted_wood"] = {
+		label = "Cut wood",
+		weight = 1,
+		stack = true,
+		close = true,
+	},
+
+	["diamond"] = {
+		label = "Diamond",
+		weight = 1,
+		stack = true,
+		close = true,
+	},
+
+	["essence"] = {
+		label = "Gas",
+		weight = 1,
+		stack = true,
+		close = true,
+	},
+
+	["fabric"] = {
+		label = "Fabric",
+		weight = 1,
+		stack = true,
+		close = true,
+	},
+
+	["fish"] = {
+		label = "Fish",
+		weight = 1,
+		stack = true,
+		close = true,
+	},
+
+	["fixkit"] = {
+		label = "Repair Kit",
+		weight = 3,
+		stack = true,
+		close = true,
+	},
+
+	["fixtool"] = {
+		label = "Repair Tools",
+		weight = 2,
+		stack = true,
+		close = true,
+	},
+
+	["gazbottle"] = {
+		label = "Gas Bottle",
+		weight = 2,
+		stack = true,
+		close = true,
+	},
+
+	["gold"] = {
+		label = "Gold",
+		weight = 1,
+		stack = true,
+		close = true,
+	},
+
+	["iron"] = {
+		label = "Iron",
+		weight = 1,
+		stack = true,
+		close = true,
+	},
+
+	["marijuana"] = {
+		label = "Marijuana",
+		weight = 2,
+		stack = true,
+		close = true,
+	},
+
+	["medikit"] = {
+		label = "Medikit",
+		weight = 2,
+		stack = true,
+		close = true,
+	},
+
+	["packaged_chicken"] = {
+		label = "Chicken fillet",
+		weight = 1,
+		stack = true,
+		close = true,
+	},
+
+	["packaged_plank"] = {
+		label = "Packaged wood",
+		weight = 1,
+		stack = true,
+		close = true,
+	},
+
+	["petrol"] = {
+		label = "Oil",
+		weight = 1,
+		stack = true,
+		close = true,
+	},
+
+	["petrol_raffin"] = {
+		label = "Processed oil",
+		weight = 1,
+		stack = true,
+		close = true,
+	},
+
+	["slaughtered_chicken"] = {
+		label = "Slaughtered chicken",
+		weight = 1,
+		stack = true,
+		close = true,
+	},
+
+	["stone"] = {
+		label = "Stone",
+		weight = 1,
+		stack = true,
+		close = true,
+	},
+
+	["washed_stone"] = {
+		label = "Washed stone",
+		weight = 1,
+		stack = true,
+		close = true,
+	},
+
+	["wood"] = {
+		label = "Wood",
+		weight = 1,
+		stack = true,
+		close = true,
+	},
+
+	["wool"] = {
+		label = "Wool",
+		weight = 1,
+		stack = true,
+		close = true,
 	},
 }
