@@ -50,7 +50,9 @@ function client.onLogout()
 	end
 
 	for _, point in pairs(client.drops) do
-		if point.entity then
+		if client.coiiRemoveDropEntity then
+            client.coiiRemoveDropEntity(point)
+        elseif point.entity then
 			Utils.DeleteEntity(point.entity)
 		end
 

@@ -168,7 +168,8 @@ lib.callback.register('ox_inventory:openShop', function(source, data)
 		playerInv.currentShop = shop.id
 	end
 
-	return { label = playerInv.label, type = playerInv.type, slots = playerInv.slots, weight = playerInv.weight, maxWeight = playerInv.maxWeight }, shop
+	return { id = playerInv.id, label = playerInv.label, type = playerInv.type, slots = playerInv.slots, quickSlotStart = shared.quickslotstart,
+        backpackSlot = shared.backpackslot, weight = playerInv.weight, maxWeight = playerInv.maxWeight }, shop
 end)
 
 local function canAffordItem(inv, currency, price)
@@ -216,6 +217,7 @@ lib.callback.register('ox_inventory:buyItem', function(source, data)
 		local toData = playerInv.items[data.toSlot]
 
 		if fromData then
+			if not Inventory.CanEquipSlot(playerInv, fromData, data.toSlot) then return false end
 			if fromData.count then
 				if fromData.count < 1 then
 					return false, false, { type = 'error', description = locale('shop_nostock') }

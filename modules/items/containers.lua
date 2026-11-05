@@ -47,6 +47,12 @@ end
 
 exports('setContainerProperties', setContainerProperties)
 
+local coii = lib.load('data.coii')
+setContainerProperties('backpack', {
+	slots = coii.BackpackSlots,
+	maxWeight = coii.BackpackWeight
+})
+
 setContainerProperties('paperbag', {
 	slots = 5,
 	maxWeight = 1000,

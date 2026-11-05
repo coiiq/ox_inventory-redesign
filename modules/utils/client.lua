@@ -80,6 +80,7 @@ RegisterNetEvent('ox_inventory:notify', Utils.Notify)
 exports('notify', Utils.Notify)
 
 local notifySuppressed = false
+local itemNoticeSoundAt
 
 ---@param value boolean
 local function setNotifySuppressed(value)
@@ -93,8 +94,17 @@ function Utils.ItemNotify(data)
     if notifySuppressed or not client.itemnotify then
         return
     end
+    if type(data) ~= 'table' or type(data[1]) ~= 'table' or type(data[1].name) ~= 'string' or data[1].name == '' then return end
+    if data[3] ~= nil and (not tonumber(data[3]) or tonumber(data[3]) == 0) then return end
 
     SendNUIMessage({ action = 'itemNotify', data = data })
+    local now = GetGameTimer()
+    if not itemNoticeSoundAt or now < itemNoticeSoundAt or now - itemNoticeSoundAt >= 200 then
+        itemNoticeSoundAt = now
+        -- Native pickup cue works while NUI is unfocused, and is distinct from
+        -- the targeting system's synthesized hover tone. Bursts share one cue.
+        PlaySoundFrontend(-1, 'PICK_UP', 'HUD_FRONTEND_DEFAULT_SOUNDSET', false)
+    end
 end
 
 RegisterNetEvent('ox_inventory:itemNotify', Utils.ItemNotify)

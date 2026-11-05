@@ -91,7 +91,8 @@ lib.callback.register('ox_inventory:openCraftingBench', function(source, id, ind
 		left:openInventory()
 	end
 
-	return { label = left.label, type = left.type, slots = left.slots, weight = left.weight, maxWeight = left.maxWeight }
+	return { id = left.id, label = left.label, type = left.type, slots = left.slots, quickSlotStart = shared.quickslotstart,
+        backpackSlot = shared.backpackslot, weight = left.weight, maxWeight = left.maxWeight }
 end)
 
 local TriggerEventHooks = require 'modules.hooks.server'
@@ -120,6 +121,7 @@ lib.callback.register('ox_inventory:craftItem', function(source, id, index, reci
 			end
 
 			local craftedItem = Items(recipe.name)
+			if not Inventory.CanEquipSlot(left, craftedItem, toSlot) then return false end
 			local craftCount = (type(recipe.count) == 'number' and recipe.count) or (table.type(recipe.count) == 'array' and math.random(recipe.count[1], recipe.count[2])) or 1
 
 			-- Modified weight calculation

@@ -7,6 +7,8 @@ local Utils = require 'modules.utils.server'
 TriggerEvent('ox_inventory:itemList', ItemList)
 
 Items.containers = require 'modules.items.containers'
+local coii = lib.load('data.coii')
+local AmmoBoxes=require 'modules.ammo.shared'
 
 -- Possible metadata when creating garbage
 local trash = {
@@ -242,6 +244,7 @@ function Items.Metadata(inv, item, metadata, count)
 		end
 	end
 
+    AmmoBoxes.normalize(item,metadata)
 	return metadata, count
 end
 
@@ -251,11 +254,22 @@ end
 ---@param ostime number
 ---Validate (and in some cases convert) item metadata when an inventory is being loaded.
 function Items.CheckMetadata(metadata, item, name, ostime)
+    AmmoBoxes.normalize(item,metadata)
 	if metadata.bag then
 		metadata.container = metadata.bag
 		metadata.size = Items.containers[name]?.size or {5, 1000}
 		metadata.bag = nil
 	end
+
+    -- Backpacks saved before container support still need valid owned storage.
+    if coii.BackpackItems[name] and Items.containers[name] then
+        if type(metadata.container) ~= 'string' or metadata.container == '' then
+            metadata.container = GenerateText(3) .. os.time()
+        end
+        if type(metadata.size) ~= 'table' or not tonumber(metadata.size[1]) or not tonumber(metadata.size[2]) then
+            metadata.size = Items.containers[name].size
+        end
+    end
 
 	local durability = metadata.durability
 

@@ -2,6 +2,14 @@ if not lib then return end
 
 local Inventory = {}
 local db = require 'modules.mysql.server'
+local coii = lib.load('data.coii')
+
+-- Applies to swaps, explicit exports, shops and crafting, not just the NUI.
+function Inventory.CanEquipSlot(inv, item, slot)
+    if inv.coiiBackpackDrop and item and not coii.BackpackItems[item.name] then return false end
+    if not inv.player or slot ~= shared.backpackslot or not item then return true end
+    return coii.BackpackItems[item.name] == true
+end
 
 ---@type table<any, OxInventory>
 local Inventories = {}
@@ -41,6 +49,7 @@ function OxInventory:closeInventory(noEvent)
     self.open = false
     self.currentShop = nil
     self.containerSlot = nil
+    if server.coiiClearGroundBackpack then server.coiiClearGroundBackpack(self) end
 
 	if not noEvent then
 		TriggerClientEvent('ox_inventory:closeInventory', self.id, true)
@@ -422,6 +431,7 @@ function Inventory.SetSlot(inv, item, count, metadata, slot)
     end
 
 	local currentSlot = inv.items[slot]
+	if count > 0 and not Inventory.CanEquipSlot(inv, item, slot) then return false, 'invalid_slot' end
 	local newCount = currentSlot and currentSlot.count + count or count
 	local newWeight = currentSlot and inv.weight - currentSlot.weight or inv.weight
 
@@ -472,6 +482,15 @@ function Inventory.SlotWeight(item, slot, ignoreCount)
 	local weight = ignoreCount and item.weight or item.weight * (slot.count or 1)
 
 	if not slot.metadata then slot.metadata = {} end
+    if item.ammoBox then
+        local boxes=require 'modules.ammo.shared'
+        local definition=boxes.definition(item)
+        local ammo=Items(item.ammoBox)
+        if definition and ammo then
+            local rounds=boxes.remaining(item,slot.metadata)
+            weight += (rounds-definition.rounds)*ammo.weight*(ignoreCount and 1 or (slot.count or 1))
+        end
+    end
 
 	if item.ammoname and slot.metadata.ammo then
 		local ammoWeight = Items(item.ammoname)?.weight
@@ -491,6 +510,8 @@ function Inventory.SlotWeight(item, slot, ignoreCount)
 
 			if componentWeight then
 				weight += componentWeight
+				local stored = slot.metadata.coiiAttachmentItems and slot.metadata.coiiAttachmentItems[slot.metadata.components[i]]
+				if stored and type(stored.weight) == 'number' then weight += stored.weight end
 			end
 		end
 	end
@@ -660,6 +681,7 @@ function Inventory.Remove(inv)
 	if not inv then return end
 
     if inv.type == 'drop' then
+        if inv.coiiBackpackDrop and server.coiiCloseGroundBackpack then server.coiiCloseGroundBackpack(inv.id) end
         TriggerClientEvent('ox_inventory:removeDrop', -1, inv.id)
         Inventory.Drops[inv.id] = nil
     elseif inv.player then
@@ -1099,6 +1121,9 @@ function Inventory.SetSlotCount(inv, slots)
 	if not inv then return end
 	if type(slots) ~= 'number' then return end
 
+    -- Player capacity is capped; the final five slots are reserved for Quick.
+    if inv.player and slots ~= shared.playerslots then return false end
+
 	inv.changed = true
 	inv.slots = slots
 
@@ -1158,6 +1183,9 @@ function Inventory.AddItem(inv, item, count, metadata, slot, cb)
 
 	if not inv?.slots then return false, 'invalid_inventory' end
 
+    if slot and (type(slot) ~= 'number' or slot % 1 ~= 0 or slot < 1 or slot > inv.slots) then return false, 'inventory_full' end
+    if not Inventory.CanEquipSlot(inv, item, slot) then return false, 'invalid_slot' end
+
 	local toSlot, slotMetadata, slotCount
 	local success, response = false
 	local invokingResource = server.loglevel > 1 and GetInvokingResource()
@@ -1177,7 +1205,7 @@ function Inventory.AddItem(inv, item, count, metadata, slot, cb)
 		local items = inv.items
 		slotMetadata, slotCount = Items.Metadata(inv.id, item, metadata and table.clone(metadata) or {}, count)
 
-		for i = 1, inv.slots do
+		for i = 1, inv.player and shared.pocketslots or inv.slots do
 			local slotData = items[i]
 
 			if item.stack and slotData ~= nil and slotData.name == item.name and table.matches(slotData.metadata, slotMetadata) then
@@ -1325,13 +1353,13 @@ function Inventory.GetItemSlots(inv, item, metadata, strict)
 	inv = Inventory(inv) --[[@as OxInventory]]
 	if not inv?.slots then return end
 
-	local totalCount, slots, emptySlots = 0, {}, inv.slots
+	local totalCount, slots, emptySlots = 0, {}, inv.player and shared.pocketslots or inv.slots
 
 	if strict == nil then strict = true end
 	local tablematch = strict and table.matches or table.contains
 
 	for k, v in pairs(inv.items) do
-		emptySlots -= 1
+        if not inv.player or k <= shared.pocketslots then emptySlots -= 1 end
 		if v.name == item.name then
 			if metadata and v.metadata == nil then
 				v.metadata = {}
@@ -1480,6 +1508,9 @@ function Inventory.CanCarryItem(inv, item, count, metadata)
 			local itemSlots, _, emptySlots = Inventory.GetItemSlots(inv, item, type(metadata) == 'table' and metadata or { type = metadata or nil })
 
 			if not itemSlots then return end
+            if inv.player then
+                for slot in pairs(itemSlots) do if slot > shared.pocketslots then itemSlots[slot] = nil end end
+            end
 
 			local weight = metadata and metadata.weight or item.weight
 
@@ -1632,7 +1663,7 @@ local TriggerEventHooks = require 'modules.hooks.server'
 ---@param playerInventory OxInventory
 ---@param fromData SlotWithItem?
 ---@param data SwapSlotData
-local function dropItem(source, playerInventory, fromData, data)
+local function dropItem(source, playerInventory, fromData, data, coiiOwner, coiiParent, groundMove)
     if not fromData then return end
 
 	local toData = table.clone(fromData)
@@ -1640,7 +1671,9 @@ local function dropItem(source, playerInventory, fromData, data)
 	toData.count = data.count
 	toData.weight = Inventory.SlotWeight(Items(toData.name), toData)
 
-    if toData.weight > shared.dropweight then return end
+    local backpack = coii.BackpackItems[toData.name] == true
+    local maxWeight = backpack and math.max(shared.dropweight, toData.weight) or shared.dropweight
+    if toData.weight > maxWeight then return end
 
     local dropId = generateInvId('drop')
 
@@ -1659,6 +1692,19 @@ local function dropItem(source, playerInventory, fromData, data)
 
 	if not hooks.success then return end
 	if Inventories[playerInventory.id] ~= playerInventory then hooks.success = false return end
+    if coiiOwner and not server.coiiOwnsBackpack(coiiOwner, playerInventory, coiiParent) then
+        hooks.success = false
+        return
+    end
+
+    if playerInventory.items[data.fromSlot] ~= fromData or fromData.count < data.count then hooks.success = false return end
+    if groundMove and not server.coiiGroundMoveValid(Inventory(source), groundMove) then hooks.success = false return end
+    if not server.coiiCanAccessPhysicalDrop(Inventory(source), playerInventory) then hooks.success = false return end
+    -- Allocate before removing anything from the source, so failure cannot lose
+    -- the original bag or detach its persistent container id.
+    local inventory = Inventory.Create(dropId, backpack and (toData.metadata.label or fromData.label or 'Backpack')
+        or ('Drop %s'):format(dropId:gsub('%D', '')), 'drop', shared.dropslots, toData.weight, maxWeight, false, {[data.toSlot] = toData})
+    if not inventory then hooks.success = false return end
 
     fromData.count -= data.count
     fromData.weight = Inventory.SlotWeight(Items(fromData.name), fromData)
@@ -1677,24 +1723,36 @@ local function dropItem(source, playerInventory, fromData, data)
 		playerInventory.weapon = nil
 	end
 
-	local inventory = Inventory.Create(dropId, ('Drop %s'):format(dropId:gsub('%D', '')), 'drop', shared.dropslots, toData.weight, shared.dropweight, false, {[data.toSlot] = toData})
-
-	if not inventory then hooks.success = false return end
-
 	inventory.coords = data.coords
-	Inventory.Drops[dropId] = {coords = inventory.coords, instance = data.instance}
+    inventory.instance = data.instance
+    inventory.coiiBackpackDrop = backpack or nil
+    if backpack then inventory.distance = 2.5 end
+	Inventory.Drops[dropId] = { coords = inventory.coords, instance = data.instance,
+        model = backpack and joaat(coii.BackpackDrop.model) or nil,
+        backpack = backpack or nil, heading = data.heading }
 	playerInventory.changed = true
 
-	TriggerClientEvent('ox_inventory:createDrop', -1, dropId, Inventory.Drops[dropId], playerInventory.open and source, slot)
+	TriggerClientEvent('ox_inventory:createDrop', -1, dropId, Inventory.Drops[dropId],
+        (coiiOwner or groundMove or playerInventory.open) and source, (coiiOwner or groundMove) and 0 or slot)
 
 	if server.loglevel > 0 then
 		lib.logger(playerInventory.owner, 'swapSlots', ('%sx %s transferred from "%s" to "%s"'):format(data.count, toData.name, playerInventory.label, dropId))
 	end
 
-	if server.syncInventory then server.syncInventory(playerInventory) end
+    if coiiOwner then
+        Inventory.ContainerWeight(coiiParent, playerInventory.weight, coiiOwner)
+        playerInventory:syncSlotsWithClients({ { item = fromData or { slot = slot }, inventory = playerInventory.id } })
+        coiiOwner:syncSlotsWithPlayer({ { item = coiiParent, inventory = coiiOwner.id } }, coiiOwner.weight)
+    end
+    if groundMove then
+        server.coiiCommitGroundMove(Inventory(source), groundMove)
+        playerInventory:syncSlotsWithClients({ { item = fromData or { slot = slot }, inventory = playerInventory.id } })
+    end
+	if server.syncInventory and not groundMove then server.syncInventory(coiiOwner or playerInventory) end
+    TriggerClientEvent('ox_inventory:itemNotify', source, { toData, 'ui_dropped', data.count })
 
 	return true, {
-		weight = playerInventory.weight,
+		weight = groundMove and Inventory(source).weight or coiiOwner and coiiOwner.weight or playerInventory.weight,
 		items = {
 			{
 				item = fromData or { slot = data.fromSlot },
@@ -1706,34 +1764,61 @@ end
 
 local GetLocks = require 'modules.locks'
 
+local function validMoveSlot(slot, capacity)
+    return type(slot) == 'number' and slot % 1 == 0 and slot >= 1 and slot <= capacity
+end
+
 ---@param source number
 ---@param data SwapSlotData
-lib.callback.register('ox_inventory:swapItems', function(source, data)
-	if data.fromType ~= data.toType and data.toType ~= 'player' and data.fromType ~= 'player' then
+function Inventory.SwapItems(source, data)
+	local playerInventory = Inventory(source)
+	if data.fromType ~= data.toType and data.toType ~= 'player' and data.fromType ~= 'player'
+        and data.fromType ~= 'coii_pack' and data.toType ~= 'coii_pack'
+        and not (data.fromType == 'container' and data.toType == 'newdrop' and playerInventory and playerInventory.coiiGroundBackpack) then
         Utils.LogExploit(source, 'swapItems', 'Triggered event with invalid data', true)
         return
     end
 
 	data.count = math.max(1, math.floor(data.count or 1))
 
-	local playerInventory = Inventory(source)
-
 	if not playerInventory or not playerInventory.open then return end
 
-	local toInventory = (data.toType == 'player' and playerInventory) or Inventory(playerInventory.open)
-	local fromInventory = (data.fromType == 'player' and playerInventory) or Inventory(playerInventory.open)
+    local coiiPack, coiiParent
+    if data.fromType == 'coii_pack' or data.toType == 'coii_pack' then
+        coiiPack, coiiParent = server.coiiGetBackpack(playerInventory)
+        if not coiiPack or not server.coiiOwnsBackpack(playerInventory, coiiPack, coiiParent) then return false end
+    end
+
+	local toInventory = (data.toType == 'player' and playerInventory)
+        or (data.toType == 'coii_pack' and coiiPack) or Inventory(playerInventory.open)
+	local fromInventory = (data.fromType == 'player' and playerInventory)
+        or (data.fromType == 'coii_pack' and coiiPack) or Inventory(playerInventory.open)
 
 	if not fromInventory or not toInventory then
 		playerInventory:closeInventory()
 		return
 	end
 
+    if not server.coiiPreparePhysicalDrop(playerInventory, fromInventory, toInventory, data) then return false end
+    local groundMove = server.coiiGroundMove(playerInventory, fromInventory, toInventory, coiiPack, coiiParent)
+    if groundMove == false then return false end
+
+    if not validMoveSlot(data.fromSlot, fromInventory.slots)
+        or not validMoveSlot(data.toSlot, data.toType == 'newdrop' and shared.dropslots or toInventory.slots) then return false end
+    if toInventory.coiiOverflowOwner and fromInventory ~= toInventory then return false end
+
     if data.toType == 'inspect' or data.fromType == 'inspect' then return end
 
-    local activeSlots <close> = GetLocks({
+    local lockKeys = {
        	('inventory-%s:slot-%s'):format(fromInventory.id, data.fromSlot),
         ('inventory-%s:slot-%s'):format(toInventory.id, data.toSlot)
-    })
+    }
+    if groundMove then
+        local context = groundMove.context
+        lockKeys[#lockKeys + 1] = ('inventory-%s:slot-%s'):format(context.drop.id, context.slot)
+        if groundMove.owned then lockKeys[#lockKeys + 1] = ('inventory-%s:slot-%s'):format(playerInventory.id, coiiParent.slot) end
+    end
+    local activeSlots <close> = GetLocks(lockKeys)
 
 	if not activeSlots then
 		return false, {
@@ -1758,6 +1843,11 @@ lib.callback.register('ox_inventory:swapItems', function(source, data)
 		return Inventories[playerInventory.id] == playerInventory
 			and Inventories[fromInventory.id] == fromInventory
 			and Inventories[toInventory.id] == toInventory
+            and server.coiiCanAccessPhysicalDrop(playerInventory, fromInventory)
+            and server.coiiCanAccessPhysicalDrop(playerInventory, toInventory)
+            and (not groundMove or (server.coiiGroundMoveValid(playerInventory, groundMove)
+                and ((groundMove.carryDelta or 0) <= 0 or playerInventory.weight + groundMove.carryDelta <= playerInventory.maxWeight)))
+            and (not coiiPack or server.coiiOwnsBackpack(playerInventory, coiiPack, coiiParent))
 	end
 
 	if not sameInventory and (fromInventory.type == 'policeevidence' or (toInventory.type == 'policeevidence' and toData)) then
@@ -1789,18 +1879,56 @@ lib.callback.register('ox_inventory:swapItems', function(source, data)
         end
 
         if data.toType == 'newdrop' then
-            return dropItem(source, fromInventory, fromData, data)
+            return dropItem(source, fromInventory, fromData, data,
+                coiiPack and fromInventory == coiiPack and playerInventory or nil, coiiParent, groundMove)
         end
 
 		if fromData then
+            if not Inventory.CanEquipSlot(toInventory, fromData, data.toSlot)
+                or not Inventory.CanEquipSlot(fromInventory, toData, data.fromSlot) then return false end
             if fromData.metadata.container and toInventory.type == 'container' then return false end
             if toData and toData.metadata.container and fromInventory.type == 'container' then return false end
+            if groundMove then
+                local swapping = toData and (toData.name ~= fromData.name or not toData.stack or not table.matches(toData.metadata, fromData.metadata))
+                local moving = swapping and fromData.weight or Inventory.SlotWeight(Items(fromData.name), { count = data.count, metadata = fromData.metadata })
+                local returning = swapping and toData.weight or 0
+                if not sameInventory then
+                    -- Stock carried-container moves can share player weight;
+                    -- a world container must enforce both destination limits.
+                    groundMove.toInventory, groundMove.fromInventory = toInventory, fromInventory
+                    groundMove.toDelta, groundMove.fromDelta = moving - returning, returning - moving
+                    if not server.coiiGroundMoveValid(playerInventory, groundMove) then return false, 'cannot_carry' end
+                end
+                for _, entry in ipairs({
+                    { inventory = groundMove.context.inventory, parent = groundMove.context.parent },
+                    { inventory = groundMove.owned, parent = groundMove.ownedParent }
+                }) do
+                    if entry.inventory then
+                        local incoming = entry.inventory == toInventory and fromData or entry.inventory == fromInventory and toData
+                        local properties = Items.containers[entry.parent.name]
+                        if incoming and properties and ((properties.whitelist and not properties.whitelist[incoming.name])
+                            or (properties.blacklist and properties.blacklist[incoming.name])) then return false end
+                    end
+                end
+                if groundMove.owned then
+                    groundMove.carryDelta = groundMove.owned == toInventory and moving - returning or returning - moving
+                    if groundMove.carryDelta > 0 and playerInventory.weight + groundMove.carryDelta > playerInventory.maxWeight then return false, 'cannot_carry' end
+                end
+            end
 
 			local container, containerItem = (not sameInventory and playerInventory.containerSlot) and (fromInventory.type == 'container' and fromInventory or toInventory)
 
 			if container then
 				containerItem = playerInventory.items[playerInventory.containerSlot]
 			end
+
+            if coiiPack and not sameInventory then
+                container = coiiPack
+                containerItem = coiiParent
+            end
+            -- Ground bag parents belong to the world drop. Commit both parents
+            -- after the native transaction, including transfers to an owned bag.
+            if groundMove then container, containerItem = nil, nil end
 
 			local hookPayload = {
 				source = source,
@@ -1812,6 +1940,11 @@ lib.callback.register('ox_inventory:swapItems', function(source, data)
 				toType = toInventory.type,
 				count = data.count,
 			}
+            local noticeFrom = table.clone(fromData)
+            noticeFrom.metadata = table.clone(fromData.metadata or {})
+            local noticeTo = toData and table.clone(toData)
+            if noticeTo then noticeTo.metadata = table.clone(toData.metadata or {}) end
+            local noticeSwap = toData and (toData.name ~= fromData.name or not toData.stack or not table.matches(toData.metadata, fromData.metadata))
 
 			if toData and ((toData.name ~= fromData.name) or not toData.stack or (not table.matches(toData.metadata, fromData.metadata))) then
 				-- Swap items
@@ -1993,6 +2126,7 @@ lib.callback.register('ox_inventory:swapItems', function(source, data)
 
 			fromInventory.items[data.fromSlot] = fromData
 			toInventory.items[data.toSlot] = toData
+            if groundMove then server.coiiCommitGroundMove(playerInventory, groundMove) end
 
 			if fromInventory.changed ~= nil then fromInventory.changed = true end
 			if toInventory.changed ~= nil then toInventory.changed = true end
@@ -2058,10 +2192,19 @@ lib.callback.register('ox_inventory:swapItems', function(source, data)
 				end
 			end
 
+            server.coiiNotifyTransfer(playerInventory, fromInventory, toInventory, noticeFrom, noticeTo, data.count, noticeSwap, coiiPack, groundMove)
+            if fromInventory.coiiBackpackDrop then
+                server.coiiCloseGroundBackpack(fromInventory.id)
+                if not next(fromInventory.items) then
+                    Inventory.Drops[fromInventory.id] = nil
+                    TriggerClientEvent('ox_inventory:removeDrop', -1, fromInventory.id)
+                end
+            end
 			return containerItem and containerItem.weight or true, nil, weaponSlot
 		end
 	end
-end)
+end
+lib.callback.register('ox_inventory:swapItems', Inventory.SwapItems)
 
 function Inventory.Confiscate(source)
 	local inv = Inventory(source)
@@ -2211,7 +2354,7 @@ function Inventory.GetEmptySlot(inv)
 
 	local items = inventory.items
 
-	for i = 1, inventory.slots do
+	for i = 1, inventory.player and shared.pocketslots or inventory.slots do
 		if not items[i] then
 			return i
 		end
@@ -2233,7 +2376,7 @@ function Inventory.GetSlotForItem(inv, itemName, metadata)
 	local items = inventory.items
 	local emptySlot
 
-	for i = 1, inventory.slots do
+	for i = 1, inventory.player and shared.pocketslots or inventory.slots do
 		local slotData = items[i]
 
 		if not slotData and not emptySlot then
@@ -2601,9 +2744,14 @@ local function updateWeapon(source, action, value, slot, specialAmmo)
 			if item.metadata.components then
 				for k, v in pairs(item.metadata.components) do
 					if v == value.component then
-						if not Inventory.AddItem(inventory, value.component, 1) then return end
+						if not Inventory.AddItem(inventory, value.component, 1, item.metadata.coiiAttachmentItems and item.metadata.coiiAttachmentItems[value.component]) then return end
 
 						table.remove(item.metadata.components, k)
+						if item.metadata.coiiAttachmentItems then item.metadata.coiiAttachmentItems[value.component] = nil end
+						inventory.weight -= item.weight
+						item.weight = Inventory.SlotWeight(Items(item.name), item)
+						inventory.weight += item.weight
+						inventory.changed = true
 						inventory:syncSlotsWithPlayer({
 							{ item = item }
 						}, inventory.weight)
@@ -2644,19 +2792,26 @@ local function updateWeapon(source, action, value, slot, specialAmmo)
 			elseif action == 'throw' then
 				if not Inventory.RemoveItem(inventory, weapon.name, 1, weapon.metadata, weapon.slot) then return end
 			elseif action == 'component' then
+				local previousWeight = weapon.weight
 				if vtype == 'number' then
-					if not Inventory.AddItem(inventory, weapon.metadata.components[value], 1) then return false end
+					local attached = weapon.metadata.components[value]
+					if not Inventory.AddItem(inventory, attached, 1, weapon.metadata.coiiAttachmentItems and weapon.metadata.coiiAttachmentItems[attached]) then return false end
 
-					table.remove(weapon.metadata.components, value)
+					local removed = table.remove(weapon.metadata.components, value)
+					if weapon.metadata.coiiAttachmentItems then weapon.metadata.coiiAttachmentItems[removed] = nil end
 					weapon.weight = Inventory.SlotWeight(item, weapon)
 				elseif vtype == 'string' then
 					local component = inventory.items[tonumber(value)]
 
-					if not Inventory.RemoveItem(inventory, component.name, 1) then return false end
+					if not Inventory.RemoveItem(inventory, component.name, 1, component.metadata, component.slot) then return false end
 
 					table.insert(weapon.metadata.components, component.name)
+					weapon.metadata.coiiAttachmentItems = weapon.metadata.coiiAttachmentItems or {}
+					weapon.metadata.coiiAttachmentItems[component.name] = table.clone(component.metadata or {})
 					weapon.weight = Inventory.SlotWeight(item, weapon)
 				end
+				inventory.weight += weapon.weight - previousWeight
+				inventory.changed = true
 			elseif action == 'ammo' then
 				if item.hash == `WEAPON_FIREEXTINGUISHER` or item.hash == `WEAPON_PETROLCAN` or item.hash == `WEAPON_HAZARDCAN` or item.hash == `WEAPON_FERTILIZERCAN` then
                     local safeValue = math.max(0, math.min(100, math.floor(value)))
