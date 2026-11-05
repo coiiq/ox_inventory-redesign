@@ -1,64 +1,63 @@
-<div align="center">
+# COII Radial Inventory
 
-# ox_inventory
+A GTA-style radial inventory for FiveM. Manage your items, equipment and storage through a compact wheel, with 3D weapon inspection and a configurable interface.
 
-A complete and modern inventory system for FiveM, providing a flexible slot-based inventory with support for shops, stashes, crafting, and vehicle storage.
+![Inventory overview](https://ibb.co/JRHQy4BB)
 
-[![](https://img.shields.io/github/downloads/overextended/ox_inventory/total?style=for-the-badge&logo=github)](https://github.com/overextended/ox_inventory/releases/latest/download/ox_inventory.zip)
-[![](https://img.shields.io/github/downloads/overextended/ox_inventory/latest/total?style=for-the-badge&logo=github)](https://github.com/overextended/ox_inventory/releases/latest/download/ox_inventory.zip)
-[![](https://img.shields.io/github/v/release/overextended/ox_inventory?style=for-the-badge&logo=github)](https://github.com/overextended/ox_inventory/releases/latest/)\
-[![](https://badges.5metrics.dev/ox_inventory/serverRank.svg?style=for-the-badge)](https://5metrics.dev/resource/ox_inventory)
-[![](https://badges.5metrics.dev/ox_inventory/servers.svg?style=for-the-badge)](https://5metrics.dev/resource/ox_inventory)
-[![](https://badges.5metrics.dev/ox_inventory/players.svg?style=for-the-badge)](https://5metrics.dev/resource/ox_inventory)
+## Features
 
-Refer to [CONTRIBUTING.md](./CONTRIBUTING.md) for contribution guidelines and to see our Contributor License Agreement.\
-Refer to [NOTICE.md](./NOTICE.md) for additional information and legal notices.
+- **Radial inventory** — eight sectors per page, scroll selection and drag-and-drop transfers.
+- **Dedicated Quick slots** — five shortcuts separate from your 24 pocket slots.
+- **Backpack equipment** — additional storage, visible clothing and physical drops that keep their contents.
+- **Weapon inspection** — rotate and zoom the model, view its stats and manage compatible attachments.
+- **Storage and shops** — ground items, stashes, crafting, shops, gloveboxes and trunks.
+- **Targeting integration** — compatible with [COII Target](docs/CONFIGURATION.md#targeting) for world interactions.
+- **Ammo boxes** — stackable 9mm, 5.56 and 7.62 boxes with remaining-round tracking.
+- **Medical syringe** — configurable healing, animation and visual/audio feedback.
+- **Customizable theme** — colours, fonts, patterns, wheel size, tilt, motion and sound.
 
-</div>
+## Weapon inspection
 
-## 📚 Documentation
+View the weapon in 3D with floating attachment controls. Installed parts appear on the model; compatible parts can be fitted or removed when you own them.
 
-https://overextended.dev/docs/ox_inventory
+![Weapon inspection](https://ibb.co/zTVcXGLf)
 
-## 💾 Download
+## Backpacks and storage
 
-https://github.com/overextended/ox_inventory/releases/latest/download/ox_inventory.zip
+Equip a backpack to access its extra slots. Drop the whole bag with its contents, open it in place or pick it up through target interactions. Carry limits and item metadata stay with the bag.
 
-## Supported frameworks
+![Backpacks and storage](https://ibb.co/qY0R3BV0)
 
-We do not guarantee compatibility or support for third-party resources.
+## Configuration
 
-- [ox_core](https://github.com/overextended/ox_core)
-- [esx](https://github.com/esx-framework/esx_core)
-- [qbox](https://github.com/Qbox-project/qbx_core)
-- [nd_core](https://github.com/ND-Framework/ND_Core)
+Set the interface colours and presentation in your server configuration:
 
-## ✨ Features
+```cfg
+setr inventory:slots 24
+setr inventory:weight 30000
 
-- Server-side security ensures interactions with items, shops, and stashes are all validated.
-- Logging for important events, such as purchases, item movement, and item creation or removal.
-- Supports player-owned vehicles, licenses, and group systems implemented by frameworks.
-- Fully synchronised, allowing multiple players to [access the same inventory](https://user-images.githubusercontent.com/65407488/230926091-c0033732-d293-48c9-9d62-6f6ae0a8a488.mp4).
+setr inventory:ui:accent "#50B7F5"
+setr inventory:ui:background "#0B1320"
+setr inventory:ui:text "#FFFFFF"
+setr inventory:ui:muted "#A7B3C4"
+setr inventory:ui:wheelSize 66
+setr inventory:ui:tilt true
+setr inventory:ui:sounds true
+setr inventory:ui:volume 1.0
+```
 
-### Items
+Run `exec inventory.cfg` to apply theme changes. Carrying limits use grams; changing gameplay settings requires a resource restart.
 
-- Inventory items are stored per-slot, with customisable metadata to support item uniqueness.
-- Overrides default weapon-system with weapons as items.
-- Weapon attachments and ammo system, including special ammo types.
-- Durability, allowing items to be depleted or removed overtime.
-- Internal item system provides secure and easy handling for item use effects.
-- Compatibility with 3rd party framework item registration.
+| File | Settings |
+| --- | --- |
+| `data/coii.lua` | Backpack capacity, clothing and world prop |
+| `data/items.lua`, `data/weapons.lua` | Items, weights, models and weapon definitions |
+| `data/coii_medical.lua` | Healing, cooldown, animation and syringe prop |
 
-### Shops
+See the [configuration reference](docs/CONFIGURATION.md) for all options and defaults.
 
-- Restricted access based on groups and licenses.
-- Support different currency for items (black money, poker chips, etc).
+## Documentation
 
-### Stashes
+[Browse the documentation](docs/README.md) for setup and full configuration.
 
-- Personal stashes, linking a stash with a specific identifier or creating per-player instances.
-- Restricted access based on groups.
-- Registration of new stashes from any resource.
-- Containers allow access to stashes when using an item, like a paperbag or backpack.
-- Access gloveboxes and trunks for any vehicle.
-- Random item generation inside dumpsters and unowned vehicles.
+**Version:** `1.0.0-rc.1`
