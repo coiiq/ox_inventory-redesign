@@ -2,7 +2,7 @@
 
 A GTA-style radial inventory for FiveM. Manage your items, equipment and storage through a compact wheel, with 3D weapon inspection and a configurable interface.
 
-![Inventory overview](https://ibb.co/JRHQy4BB)
+![Inventory overview](https://i.imgur.com/ERm4bfT.jpeg)
 
 ## Features
 
@@ -20,13 +20,13 @@ A GTA-style radial inventory for FiveM. Manage your items, equipment and storage
 
 View the weapon in 3D with floating attachment controls. Installed parts appear on the model; compatible parts can be fitted or removed when you own them.
 
-![Weapon inspection](https://ibb.co/zTVcXGLf)
+![Weapon inspection](https://i.imgur.com/IcXwtXp.jpeg)
 
 ## Backpacks and storage
 
 Equip a backpack to access its extra slots. Drop the whole bag with its contents, open it in place or pick it up through target interactions. Carry limits and item metadata stay with the bag.
 
-![Backpacks and storage](https://ibb.co/qY0R3BV0)
+![Backpacks and storage](https://i.imgur.com/ETEP2LL.jpeg)
 
 ## Configuration
 
